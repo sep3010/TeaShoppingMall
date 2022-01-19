@@ -1,4 +1,4 @@
-package edu.kosmo.pse;
+package edu.kosmo.pse.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
