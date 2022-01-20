@@ -8,7 +8,7 @@
 	<name>spring_pse_teashop</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
-     <properties>
+       <properties>
          <java-version>1.8</java-version>
          <org.springframework-version>5.0.7.RELEASE</org.springframework-version>
          <org.aspectj-version>1.6.10</org.aspectj-version>
@@ -281,6 +281,13 @@
                   <mainClass>org.test.int1.Main</mainClass>
                </configuration>
             </plugin>
+            
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.2</version>
+			</plugin>
+
          </plugins>
       </build>
    </project>

@@ -20,8 +20,8 @@ GRADE_NAME          VARCHAR2(20)
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthVO {
-	private int grade_id;
+	private int gradeId;
 	private String authority;
-	private String grade_name;
+	private String gradeName;
 	
 }

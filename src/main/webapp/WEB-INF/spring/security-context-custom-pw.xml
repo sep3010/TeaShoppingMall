@@ -25,17 +25,13 @@
                 
         <access-denied-handler error-page="/security/accessDenied" />
     </http>    
-    				<!-- password 암호화 모듈 : 알아서 꺼내올때 디코딩도 해준다. -->
+    				<!-- password 암호화 모듈 -->
     <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+ 
+    <beans:bean id="memberCustomService" class="edu.kosmo.pse.security.MemberCustomService"/>
     
-    <!-- 이제 이전에 만들었던 암호화 모듈이 적용되지 않은 버전은 사용하지 않고, 위의 암호화 모듈 사용 -->     
-    <beans:bean id="customNoOpPasswordEncoder" class="edu.kosmo.ex.security.CustomNoOpPasswordEncoder"/>
-    <beans:bean id="userCustomDetailsService" class="edu.kosmo.ex.security.UserCustomDetailsService"/>
-    
-    <!-- BLAKE 7698 -->
-    <!--  provider  -->
-      <authentication-manager>
-        <authentication-provider user-service-ref="userCustomDetailsService">
+    <authentication-manager>
+        <authentication-provider user-service-ref="memberCustomService">
         <password-encoder ref="bcryptPasswordEncoder"/> 
         </authentication-provider>
     </authentication-manager> 

@@ -2,13 +2,10 @@ package edu.kosmo.pse.service;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.kosmo.pse.mapper.MemberMapper;
-import edu.kosmo.pse.vo.MemberVO;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -22,11 +19,10 @@ public class MemberService {
 	private MemberMapper memberMapper;
 	
 	//@Transactional(rollbackFor = Exception.class)
-	public void readMember(String id) {
-		log.info("readMember()...");
+	public void addMember(String id) {
+		log.info("addMember()...");
 		
-		MemberVO memberVO = memberMapper.readMember(id);
-		memberVO.setAuthList(memberMapper.readAuthority(id));
+		
 	}
 	
 	

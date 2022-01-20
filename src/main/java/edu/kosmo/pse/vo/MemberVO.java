@@ -31,17 +31,17 @@ GRADE_ID  NOT NULL NUMBER
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberVO {
-	private String user_id;
+	private String userId;
 	private String password;
-	private String user_name;
+	private String userName;
 	private Date birth;
 	private String phone;
 	private String email;
-	private String zip_code;
+	private String zipCode;
 	private String address;
 	private String platform;
 	private int point;
-	private int grade_id;
+	private int gradeId;
 	
 	private List<AuthVO> authList;
 	

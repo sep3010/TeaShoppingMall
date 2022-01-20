@@ -28,7 +28,7 @@ public class MemberCustom extends User {
 
 	public MemberCustom(MemberVO memberVO) {
 
-		super(memberVO.getUser_name(), memberVO.getPassword(), getAuth(memberVO));
+		super(memberVO.getUserName(), memberVO.getPassword(), getAuth(memberVO));
 
 		this.memberVO = memberVO;
 	}
