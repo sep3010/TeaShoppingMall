@@ -31,8 +31,8 @@ GRADE_ID  NOT NULL NUMBER
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberVO {
-	private int user_id;
-	private int password;
+	private String user_id;
+	private String password;
 	private String user_name;
 	private Date birth;
 	private String phone;

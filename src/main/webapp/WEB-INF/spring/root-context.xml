@@ -31,7 +31,16 @@
 		<constructor-arg ref="hikariConfig" />
 	</bean>
 
+<!-- <bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations"
+			value="classpath:/sqlmap/*.xml" />
+	</bean>  -->	
 
+	<!-- Mapper Interface -->
+	<mybatis-spring:scan
+		base-package="edu.kosmo.pse.mapper" />
 
 
 </beans>

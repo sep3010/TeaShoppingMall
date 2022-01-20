@@ -13,10 +13,10 @@ public class LoginController {
 		return "home";
 	}
 	
-	@GetMapping("/login")
+	@GetMapping("/loginform")
 	public String login() {
 		
-		return "login";
+		return "loginform";
 	}
 	
 }
