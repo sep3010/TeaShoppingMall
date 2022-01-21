@@ -5,6 +5,7 @@
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%@ include file="/WEB-INF/include/header.jspf" %>
     <title>로그인 페이지</title>
 </head>
 
@@ -22,8 +23,8 @@
         <p>로그아웃 하였습니다.</p>
     </c:if>
     <p>
-        <label for="username">아이디</label>
-        <input type="text" id="id" name="id" />
+        <label for="userId">아이디</label>
+        <input type="text" id="userId" name="userId" />
     </p>
     <p>
         <label for="password">비밀번호</label>

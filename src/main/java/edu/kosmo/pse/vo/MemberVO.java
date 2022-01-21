@@ -10,19 +10,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 /*
-이름        널?       유형            
---------- -------- ------------- 
-USER_ID   NOT NULL VARCHAR2(50)  
-PASSWORD  NOT NULL VARCHAR2(50)  
-USER_NAME NOT NULL VARCHAR2(30)  
-BIRTH     NOT NULL DATE          
-PHONE     NOT NULL VARCHAR2(20)  
-EMAIL     NOT NULL VARCHAR2(80)  
-ZIP_CODE           VARCHAR2(20)  
-ADDRESS            VARCHAR2(200) 
-PLATFORM           VARCHAR2(10)  
-POINT     NOT NULL NUMBER        
-GRADE_ID  NOT NULL NUMBER
+이름             널?       유형            
+-------------- -------- ------------- 
+USER_ID        NOT NULL VARCHAR2(50)  
+PASSWORD       NOT NULL VARCHAR2(150)  
+USER_NAME      NOT NULL VARCHAR2(30)  
+BIRTH          NOT NULL DATE          
+PHONE          NOT NULL VARCHAR2(20)  
+EMAIL          NOT NULL VARCHAR2(80)  
+ZIP_CODE                VARCHAR2(20)  
+ADDRESS                 VARCHAR2(200) 
+PLATFORM                VARCHAR2(10)  
+POINT          NOT NULL NUMBER        
+PURCHASE_GRADE NOT NULL VARCHAR2(10)
 */  
 
 @Getter
@@ -41,8 +41,8 @@ public class MemberVO {
 	private String address;
 	private String platform;
 	private int point;
-	private int gradeId;
-	
+	private String purchaseGrade;
+
 	private List<AuthVO> authList;
 	
 }

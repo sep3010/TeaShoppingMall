@@ -5,30 +5,34 @@
 
 <mapper namespace="edu.kosmo.pse.mapper.MemberMapper">
 	<resultMap type="edu.kosmo.pse.vo.MemberVO" id="memberMap">
-		<result property="userId" column="user_id"/>
-		<result property="password" column="password"/>
-		<result property="userName" column="user_name"/>
-		<result property="birth" column="birth"/>
-		<result property="phone" column="phone"/>
-		<result property="email" column="email"/>
-		<result property="zipCode" column="zip_code"/>
-		<result property="address" column="address"/>
-		<result property="platform" column="platform"/>
-		<result property="point" column="point"/>
-		<result property="gradeId" column="grade_id"/>
-		<collection property="authList" resultMap="authMap"></collection>	
+		<result property="userId" column="user_id" />
+		<result property="password" column="password" />
+		<result property="userName" column="user_name" />
+		<result property="birth" column="birth" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="zipCode" column="zip_code" />
+		<result property="address" column="address" />
+		<result property="platform" column="platform" />
+		<result property="point" column="point" />
+		<result property="purchaseGrade" column="purchase_grade" />
+		<collection property="authList" resultMap="authMap"></collection>
 	</resultMap>
-	
+
 	<resultMap type="edu.kosmo.pse.vo.AuthVO" id="authMap">
-		<result property="gradeId" column="grade_id"/>
-		<result property="authority" column="grade_id"/>
-		<result property="gradeName" column="grade_id"/>	
+		<result property="userId" column="user_id" />
+		<result property="authority" column="authority" />
+
 	</resultMap>
-	
+
 	<select id="getMember" resultMap="memberMap">
-		SELECT * FROM member m, authorities au WHERE m.grade_id = au.grade_id and m.user_id = #{userId}
+		SELECT * FROM member m, authorities a WHERE m.user_id = a.user_id AND m.user_id = #{userId}
 	</select>
-	
+
+	<insert id="insertMember">
+		INSERT INTO member VALUES (#{userId}, #{password}, #{userName}, #{birth}, #{phone}, #{email}, #{zipCode}, #{address}, null, 0, #{purchaseGrade})
+	</insert>
+
 
 
 </mapper>	

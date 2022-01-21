@@ -7,23 +7,23 @@
     
     <!-- 검사 URL -->
     <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/loginForm" access="permitAll" />
+        <intercept-url pattern="/login/loginForm" access="permitAll" />
         <!-- 회원 가입 추가 -->
         <intercept-url pattern="/add/**" access="permitAll" />
         <intercept-url pattern="/" access="permitAll" />
         <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
         <intercept-url pattern="/**" access="hasAnyRole('USER, ADMIN')" />
         
-        <form-login login-page="/loginForm"
+        <form-login login-page="/login/loginForm"
                     default-target-url="/"
-                    authentication-failure-url="/login/loginForm?error"
-                    username-parameter="id"
+                    authentication-failure-url="/loginForm?error"
+                    username-parameter="userId"
                     password-parameter="password" />
         
          <logout logout-url="/logout"
                 logout-success-url="/" /> 
                 
-        <access-denied-handler error-page="/security/accessDenied" />
+        <!-- <access-denied-handler error-page="/security/accessDenied" /> -->
     </http>    
     				<!-- password 암호화 모듈 -->
     <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
