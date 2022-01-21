@@ -28,10 +28,10 @@
     				<!-- password 암호화 모듈 -->
     <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
  
-    <beans:bean id="memberCustomService" class="edu.kosmo.pse.security.MemberCustomService"/>
+    <beans:bean id="memberCustomDetailsService" class="edu.kosmo.pse.security.MemberCustomDetailsService"/>
     
     <authentication-manager>
-        <authentication-provider user-service-ref="memberCustomService">
+        <authentication-provider user-service-ref="memberCustomDetailsService">
         <password-encoder ref="bcryptPasswordEncoder"/> 
         </authentication-provider>
     </authentication-manager> 

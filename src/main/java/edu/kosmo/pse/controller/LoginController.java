@@ -13,10 +13,10 @@ public class LoginController {
 		return "home";
 	}
 	
-	@GetMapping("/loginform")
+	@GetMapping("/loginForm")
 	public String login() {
 		
-		return "loginform";
+		return "loginForm";
 	}
 	
 }

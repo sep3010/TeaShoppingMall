@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import edu.kosmo.pse.mapper.MemberMapper;
+import edu.kosmo.pse.vo.MemberCustom;
+import edu.kosmo.pse.vo.MemberVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
@@ -19,9 +21,14 @@ public class MemberCustomDetailsService implements UserDetailsService  {
 	private MemberMapper memberMapper;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		
-		return null;
+		log.warn("Load Member By MemverVO user_id: " + userId);
+		MemberVO memberVO = memberMapper.getMember(userId);
+		
+		log.warn("Queried by MemberVO mapper: " + memberVO);
+		
+		return memberVO == null ? null : new MemberCustom(memberVO);
 	}
 	
 	

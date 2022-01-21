@@ -31,12 +31,12 @@
 		<constructor-arg ref="hikariConfig" />
 	</bean>
 
-<!-- <bean id="sqlSessionFactory"
+ 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="mapperLocations"
 			value="classpath:/sqlmap/*.xml" />
-	</bean>  -->	
+	</bean>  	
 
 	<!-- Mapper Interface -->
 	<mybatis-spring:scan
