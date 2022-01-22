@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.kosmo.pse.mapper.MemberMapper">
+	<resultMap type="edu.kosmo.pse.vo.MemberVO" id="memberMap">
+		<result property="userId" column="user_id" />
+		<result property="password" column="password" />
+		<result property="userName" column="user_name" />
+		<result property="birth" column="birth" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="zipCode" column="zip_code" />
+		<result property="address" column="address" />
+		<result property="platform" column="platform" />
+		<result property="point" column="point" />
+		<result property="purchaseGrade" column="purchase_grade" />
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+
+	<resultMap type="edu.kosmo.pse.vo.AuthVO" id="authMap">
+		<result property="userId" column="user_id" />
+		<result property="authority" column="authority" />
+
+	</resultMap>
+
+	<select id="getMember" resultMap="memberMap">
+		SELECT * FROM member m, authorities a WHERE m.user_id = a.user_id AND m.user_id = #{userId}
+	</select>
+
+	<insert id="insertMember">
+		INSERT INTO member VALUES (#{userId}, #{password}, #{userName}, #{birth}, #{phone}, #{email}, #{zipCode}, #{address}, null, 0, #{purchaseGrade})
+	</insert>
+
+
+
+</mapper>	
