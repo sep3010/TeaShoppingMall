@@ -19,6 +19,7 @@ public class MemberService {
 	@Autowired
 	private MemberMapper memberMapper;
 	
+	// 회원 추가
 	@Transactional(rollbackFor = Exception.class)	
 	public void addMember(MemberVO memberVO) {
 		log.info("addMember()...");
@@ -27,6 +28,7 @@ public class MemberService {
 		
 		memberVO.setPassword(encode);
 		
+		// 구매 등급 초기값 고정
 		String purchaseGrade = "BRONZE";
 		memberVO.setPurchaseGrade(purchaseGrade);
 		
