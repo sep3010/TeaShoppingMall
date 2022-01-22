@@ -11,8 +11,9 @@
         <!-- 회원 가입 추가 -->
         <intercept-url pattern="/add/**" access="permitAll" />
         <intercept-url pattern="/" access="permitAll" />
-        <intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/**" access="hasAnyRole('USER, ADMIN')" />
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/manager/**" access="hasRole('ROLE_MANAGER')" />
+        <intercept-url pattern="/**" access="hasAnyRole('ROLE_USER, ROLE_MANAGER, ROLE_ADMIN')" />
         
         <form-login login-page="/login/loginForm"
                     default-target-url="/"
@@ -23,7 +24,7 @@
          <logout logout-url="/logout"
                 logout-success-url="/" /> 
                 
-        <!-- <access-denied-handler error-page="/security/accessDenied" /> -->
+        <access-denied-handler error-page="/security/accessDenied" />
     </http>    
     				<!-- password 암호화 모듈 -->
     <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />

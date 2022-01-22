@@ -32,6 +32,7 @@
     </p>
     <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
     <button type="submit" class="btn">로그인</button>
+    <a href="${pageContext.request.contextPath}/add/addForm">회원가입</a>
    
 </form:form>
 

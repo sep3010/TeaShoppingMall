@@ -19,19 +19,37 @@ public class MemberController {
 	@Inject
 	private MemberService memberService;
 	
-	@GetMapping("/add/addForm")
+	@GetMapping("/add/addForm") // 회원가입
 	public String memberForm() {
-		log.info("memberForm..");
-		
+		log.info("memberForm..");		
 		return "add/addForm";
 	}
 	
-	@PostMapping("/add/addMember")
+	@PostMapping("/add/addMember") // 회원가입 완료
 	public String addMember(MemberVO memberVO) {
 		log.info("addMember..");
 		memberService.addMember(memberVO);
 		
 		return "redirect:/login/loginForm";
 	}
+	
+	@GetMapping("/admin/adminHome") // 관리자 페이지
+	public String adminHome() {
+		log.info("adminHome..");		
+		return "admin/adminHome";
+	}
+	
+	@GetMapping("/user/userHome") // 마이 페이지
+	public String userHome() {
+		log.info("userHome..");		
+		return "user/userHome";
+	}
+
+	@GetMapping("/security/accessDenied") // 403 에러 페이지
+	public String accessDenied() {
+		log.info("accessDenied..");		
+		return "security/accessDenied";
+	}	
+	
 	
 }
