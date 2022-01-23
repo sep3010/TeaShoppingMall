@@ -16,41 +16,55 @@
 		<result property="cellCount" column="cell_count" />
 		<result property="stock" column="stock" />
 		<result property="categoryName" column="category_name" />
-		<collection property="images" resultMap="imageMap"></collection>
+		<!-- <collection property="images" resultMap="imageMap"></collection> -->
 	</resultMap>
 
-	<resultMap type="edu.kosmo.pse.vo.ProductImageVO"
+<!-- 	<resultMap type="edu.kosmo.pse.vo.ProductImageVO"
 		id="imageMap">
 		<result property="imgId" column="img_id" />
 		<result property="productId" column="product_id" />
 		<result property="imgName" column="img_name" />
 		<result property="imgExtension" column="img_extension" />
 		<result property="imgPath" column="img_path" />
-	</resultMap>
+	</resultMap> -->
 
 	<resultMap type="edu.kosmo.pse.vo.ProductCategoryVO"
 		id="categoryMap">
 		<result property="categoryId" column="category_id" />
 		<result property="categoryName" column="category_name" />
 	</resultMap>
-
+	
 	<select id="getProductList" resultMap="productMap">
 		SELECT p.product_id,
 		p.product_name, p.category_id, p.brand,
 		p.weight, p.count, p.product_price, p.update_date, p.cell_count,
-		p.stock, c.category_name, i.img_id, i.product_id, i.img_name,
-		i.img_extension, i.img_path FROM product p
+		p.stock, c.category_name FROM product p
 		LEFT JOIN product_category c ON p.category_id = c.category_id
-		LEFT JOIN product_image i ON p.product_id = i.product_id ORDER BY p.product_id DESC
+		ORDER BY p.product_id DESC
 	</select>
+	
+	<!--
+	<select id="getProductList" resultMap="productMap">
+		<![CDATA[
+			SELECT * FROM (
+	              SELECT ROWNUM AS RNUM, A.* FROM (
+	                       SELECT p.product_id,
+			p.product_name, p.category_id, p.brand,
+			p.weight, p.count, p.product_price, p.update_date, p.cell_count,
+			p.stock, c.category_name FROM product p
+			LEFT JOIN product_category c ON p.category_id = c.category_id
+			ORDER BY p.product_id DESC   
+	             ) A WHERE ROWNUM <= #{pageNum} * 10
+	         ) WHERE RNUM > (#{pageNum}-1) * 10
+	    ]]>     
+	</select>
+	-->
 	
 	<select id="getProduct" resultMap="productMap">
 		SELECT p.product_id, p.product_name, p.category_id, p.brand,
 		p.weight, p.count, p.product_price, p.update_date, p.cell_count,
-		p.stock, c.category_name, i.img_id, i.product_id, i.img_name, 
-		i.img_extension, i.img_path FROM product p 
+		p.stock, c.category_name FROM product p 
 		LEFT JOIN product_category c ON p.category_id = c.category_id
-		LEFT JOIN product_image i ON p.product_id = i.product_id
 		WHERE p.product_id = #{productId}
 	</select>
 

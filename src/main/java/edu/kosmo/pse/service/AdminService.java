@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.kosmo.pse.mapper.AdminMapper;
 import edu.kosmo.pse.mapper.MemberMapper;
+import edu.kosmo.pse.page.Criteria;
 import edu.kosmo.pse.vo.MemberVO;
 import edu.kosmo.pse.vo.ProductImageVO;
 import edu.kosmo.pse.vo.ProductVO;
@@ -29,7 +30,7 @@ public class AdminService {
 		return adminMapper.getProductList();		
 	}
 	
-	// 상품 상세 내역 조히
+	// 상품 상세 내역 조회
 	public ProductVO getProduct(int productId) {
 		log.info("getProduct()...");
 		return adminMapper.getProduct(productId);

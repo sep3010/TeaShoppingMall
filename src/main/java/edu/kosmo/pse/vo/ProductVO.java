@@ -43,6 +43,6 @@ public class ProductVO {
 
 	private String categoryName;
 	
-	private List<ProductImageVO> images;
+	// private List<ProductImageVO> images;
 	
 }

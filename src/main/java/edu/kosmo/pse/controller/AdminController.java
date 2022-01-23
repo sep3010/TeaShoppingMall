@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import edu.kosmo.pse.page.Criteria;
+import edu.kosmo.pse.page.PageVO;
 import edu.kosmo.pse.service.AdminService;
 import edu.kosmo.pse.vo.ProductVO;
 import lombok.AllArgsConstructor;
@@ -42,6 +44,7 @@ public class AdminController {
 		view.addObject("productList", adminService.getProductList());
 		return view;
 	}
+	
 	
 	@GetMapping("/product/manageProduct/{productId}") // 상품 삭제
 	public ResponseEntity<String> deleteProduct(ProductVO productVO, Model model) {

@@ -19,17 +19,18 @@ public class PageVO {
 	private boolean next;
 	
 	private int total;
+	private final int AMOUNT = 10;
 	
 	private Criteria cri;
 
-	public PageVO(int total, Criteria cri) {
-		this.total = total;
-		this.cri = cri;
+	public PageVO(int total, int pageNum) {
 		
-		this.endPage = (int)(Math.ceil(cri.getPageNum() / 10.0)) * 10;
+		this.total = total;
+		
+		this.endPage = (int)(Math.ceil(pageNum / 10.0)) * 10;
 		this.startPage = this.endPage - 9;
 		
-		int realEnd = (int)(Math.ceil((total * 1.0) / cri.getAmount()));
+		int realEnd = (int)(Math.ceil((total * 1.0) / AMOUNT));
 		
 		if(realEnd <= this.endPage) {
 			this.endPage = realEnd;

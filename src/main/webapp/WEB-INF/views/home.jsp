@@ -23,12 +23,6 @@
 			</p>
 			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a>
 		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_MANAGER')">
-			<p>
-				${userId} 사원님 환영합니다.
-			</p>
-			<a href="${pageContext.request.contextPath}/mamager/managerHome">사원 페이지</a>
-		</sec:authorize>
 		<sec:authorize access="!hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')">
 			<p>
 				${userId}님 환영합니다.
