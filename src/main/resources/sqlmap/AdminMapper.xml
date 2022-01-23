@@ -57,7 +57,7 @@
 	<insert id="insertProduct">
 		INSERT INTO product VALUES 
 		(PRODUCT_SEQ.nextval, #{productName}, #{categoryId}, #{brand}, 
-		#{weight}, #{count}, #{productPrice}, SYSDATE, 0, 0)
+		#{weight}, #{count}, #{productPrice}, SYSDATE, 0, #{stock})
 	</insert>
 	
 	<!-- 

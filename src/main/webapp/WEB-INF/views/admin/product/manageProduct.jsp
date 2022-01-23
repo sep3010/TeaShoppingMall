@@ -9,18 +9,18 @@
     <%@ include file="/WEB-INF/include/header.jspf" %>
     <title>상품 관리</title>
     <script type="text/javascript">
-		$(document).ready(() => {
-		    $(".delete").click( (event) => {
+		$(document).ready(function () {
+		    $(".delete").click( function (event) {
 		       event.preventDefault();
 		       
 		       let trObj = $(this).parent().parent();
 		       
 		       console.log($(this).attr("href"));
 		       
-		       $.ajax({
-		           type : "DELETE",
+		       $.ajax({	// type을 delete로 하면 계속 405 에러
+		           type : "GET", 
 		           url : $(this).attr("href"),
-		           success: (result) => {       
+		           success: function (result) {       
 		           console.log(result); 
 		             if(result == "SUCCESS"){
 		                   $(trObj).remove();  	                             
@@ -69,6 +69,9 @@
 				<c:if test="${product.count == 0 && product.weight == 0}">
 					<td>입력값 없음</td>
 				</c:if>
+				<c:if test="${product.count != 0 && product.weight != 0}">
+					<td>${product.weight}g * ${product.count}개</td>
+				</c:if>
 				<td>${product.productPrice}</td>
 				<td>${product.updateDate}</td>
 				<td>${product.cellCount}</td>
@@ -78,7 +81,7 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td colspan="10"><a href="">상품 등록</a></td>
+			<td colspan="10"><a href="${pageContext.request.contextPath}/admin/product/addProductForm">상품 등록</a></td>
 		</tr>
 	</table>
 

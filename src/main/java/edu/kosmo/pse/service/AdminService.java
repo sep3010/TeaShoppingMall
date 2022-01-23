@@ -25,15 +25,16 @@ public class AdminService {
 	}
 	
 	// 상품 상세 내역 조히
-	public ProductVO getProduct() {
+	public ProductVO getProduct(int productId) {
 		log.info("getProduct()...");
-		return adminMapper.getProduct();
+		return adminMapper.getProduct(productId);
 	}
 	
 	// 상품 등록
 	@Transactional(rollbackFor = Exception.class)	
 	public void addProduct(ProductVO productVO) {
 		log.info("addProduct()...");
+
 		adminMapper.insertProduct(productVO);		
 	}
 	

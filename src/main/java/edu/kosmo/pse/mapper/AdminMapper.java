@@ -16,7 +16,7 @@ public interface AdminMapper {
 	public List<ProductVO> getProductList();
 	
 	// 상품 상세 정보 조회
-	public ProductVO getProduct();
+	public ProductVO getProduct(int productId);
 	
 	// 상품 등록
 	public void insertProduct(ProductVO productVO);

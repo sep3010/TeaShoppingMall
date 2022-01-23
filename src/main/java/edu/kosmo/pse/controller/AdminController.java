@@ -5,9 +5,11 @@ import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,7 @@ import edu.kosmo.pse.service.AdminService;
 import edu.kosmo.pse.vo.ProductVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import oracle.jdbc.proxy.annotation.Methods;
 
 @Log4j
 @AllArgsConstructor
@@ -36,13 +39,13 @@ public class AdminController {
 	
 	@GetMapping("/product/manageProduct") // 상품 관리
 	public ModelAndView manageProduct(ModelAndView view) {
-		log.info("manageProduct..");	
+		log.info("manageProduct()..");	
 		view.setViewName("admin/product/manageProduct");
 		view.addObject("productList", adminService.getProductList());
 		return view;
 	}
 	
-	@DeleteMapping("/product/manageProduct/{productId}")
+	@GetMapping("/product/manageProduct/{productId}") // 상품 삭제
 	public ResponseEntity<String> deleteProduct(ProductVO productVO, Model model) {
 		ResponseEntity<String> entity = null;
 		log.info("deleteProduct()..");
@@ -56,7 +59,29 @@ public class AdminController {
 		return entity;
 	}
 	
+	@GetMapping("/product/addProductForm") // 상품 등록 페이지
+	public ModelAndView addProductFrom(ModelAndView view) {
+		log.info("addProductFrom()..");	
+		view.setViewName("admin/product/addProductForm");
+		return view;
+	}
 	
+	@GetMapping("/product/productDetails") // 상품 상세 페이지
+	public ModelAndView productDetails(ModelAndView view, ProductVO productVO) {
+		log.info("productDetails()..");			
+		view.addObject("product", adminService.getProduct(productVO.getProductId()));		
+		view.setViewName("admin/product/productDetails");
+		return view;
+	}
+		
+	@PostMapping("/product/addProduct") // 상품 등록 페이지에서 등록 버튼을 누를 경우 
+	public ModelAndView addProduct(ModelAndView view, ProductVO productVO) {
+		log.info("addProduct()..");			
+		adminService.addProduct(productVO);
+		view.setViewName("redirect:/admin/product/manageProduct");
+		return view;
+	}
+		
 	@GetMapping("/order/manageOrder") // 주문 관리
 	public ModelAndView manageOrder(ModelAndView view) {
 		log.info("manageOrder..");
