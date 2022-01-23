@@ -9,32 +9,7 @@
     <%@ include file="/WEB-INF/include/header.jspf" %>
     <title>상품 등록</title>
     <script type="text/javascript">
-		$(document).ready(function () {
-		    $(".delete").click( function (event) {
-		       event.preventDefault();
-		       
-		       let trObj = $(this).parent().parent();
-		       
-		       console.log($(this).attr("href"));
-		       
-		       $.ajax({	// type을 delete로 하면 계속 405 에러
-		           type : "GET", 
-		           url : $(this).attr("href"),
-		           success: function (result) {       
-		           console.log(result); 
-		             if(result == "SUCCESS"){
-		                   $(trObj).remove();  	                             
-		                }                       
-		              },
-		              error: (e) => {
-		                  console.log(e);
-		              }         
-		       
-		       });   
-		    
-		    });   
-		 
-		});
+
     </script>
 </head>
 
@@ -81,6 +56,10 @@
 			<tr>
 				<td>재고량</td>
 				<td><input type="number"  name="stock"/></td>
+			</tr>
+			<tr>
+				<td>상품 이미지</td>
+				<td><input type="file" multiple="multiple" accept="image/*" name="file"/></td>
 			</tr>
 
 		</table>

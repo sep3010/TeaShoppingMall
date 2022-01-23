@@ -47,7 +47,7 @@
 			</c:if>
 		<tr>
 			<td>판매가</td>
-			<td>${product.productPrice}</td>
+			<td>${product.productPrice}원</td>
 		</tr>
 		<tr>
 			<td>등록일자</td>
@@ -55,15 +55,15 @@
 		</tr>
 		<tr>
 			<td>판매량</td>
-			<td>${product.cellCount}</td>
+			<td>${product.cellCount}개</td>
 		</tr>
 		<tr>
 			<td>재고량</td>
-			<td>${product.stock}</td>
+			<td>${product.stock}개</td>
 		</tr>
 
 	</table>
-
+<h3>[<a href="<c:url value="/admin/product/modifyProduct/${product.productId}" />">수정하기</a>]</h3>
 <h3>[<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]</h3>
 <h3>[<a href="<c:url value="/admin/product/manageProduct" />">상품 목록</a>]</h3>
 </body>

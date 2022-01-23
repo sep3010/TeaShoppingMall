@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.kosmo.pse.mapper.AdminMapper;
+import edu.kosmo.pse.mapper.MemberMapper;
+import edu.kosmo.pse.vo.MemberVO;
 import edu.kosmo.pse.vo.ProductImageVO;
 import edu.kosmo.pse.vo.ProductVO;
 import lombok.extern.log4j.Log4j;
@@ -17,6 +19,9 @@ public class AdminService {
 	
 	@Autowired
 	private AdminMapper adminMapper;
+	
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	// 등록된 상품들 리스트 불러오기
 	public List<ProductVO> getProductList() {
@@ -50,6 +55,19 @@ public class AdminService {
 	public void deleteProduct(int productId) {
 		log.info("deleteProduct()...");
 		adminMapper.deleteProduct(productId);		
+	}
+	
+	// 상품 수정
+	@Transactional(rollbackFor = Exception.class)	
+	public void modifyProduct(ProductVO productVO) {
+		log.info("modifyProduct()...");
+		adminMapper.updateProduct(productVO);		
+	}
+	
+	// 회원 목록 조회
+	public List<MemberVO> getMemberList() {
+		log.info("getMemberList()...");
+		return memberMapper.getMemberList();	
 	}
 	
 	

@@ -18,7 +18,6 @@ import edu.kosmo.pse.service.AdminService;
 import edu.kosmo.pse.vo.ProductVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import oracle.jdbc.proxy.annotation.Methods;
 
 @Log4j
 @AllArgsConstructor
@@ -28,7 +27,6 @@ public class AdminController {
 	
 	@Inject
 	private AdminService adminService;
-
 	
 	@GetMapping("/adminHome") // 관리자 페이지
 	public ModelAndView adminHome(ModelAndView view) {
@@ -66,7 +64,7 @@ public class AdminController {
 		return view;
 	}
 	
-	@GetMapping("/product/productDetails") // 상품 상세 페이지
+	@GetMapping("/product/productDetails/{productId}") // 상품 상세 페이지
 	public ModelAndView productDetails(ModelAndView view, ProductVO productVO) {
 		log.info("productDetails()..");			
 		view.addObject("product", adminService.getProduct(productVO.getProductId()));		
@@ -81,6 +79,22 @@ public class AdminController {
 		view.setViewName("redirect:/admin/product/manageProduct");
 		return view;
 	}
+	
+	@GetMapping("/product/modifyProduct/{productId}") // 상품 수정 페이지
+	public ModelAndView modifyProduct(ModelAndView view, ProductVO productVO) {
+		log.info("modifyProduct()..");			
+		view.addObject("product", adminService.getProduct(productVO.getProductId()));		
+		view.setViewName("admin/product/modifyProduct");
+		return view;
+	}
+	
+	@PostMapping("/product/modify") // 상품 수정 페이지에서 수정 완료 버튼 누른 경우
+	public ModelAndView modify(ModelAndView view, ProductVO productVO) {
+		log.info("modifyProduct()..");			
+		adminService.modifyProduct(productVO);	
+		view.setViewName("redirect:/admin/product/manageProduct");
+		return view;
+	}
 		
 	@GetMapping("/order/manageOrder") // 주문 관리
 	public ModelAndView manageOrder(ModelAndView view) {
@@ -92,7 +106,8 @@ public class AdminController {
 	@GetMapping("/member/manageMember") // 회원 관리
 	public ModelAndView manageMember(ModelAndView view) {
 		log.info("manageMember..");	
-		view.setViewName("admin/member/manageMember");
+		view.addObject("member", adminService.getMemberList());
+		view.setViewName("admin/member/manageMember");		
 		return view;
 	}
 

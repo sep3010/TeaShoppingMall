@@ -57,7 +57,7 @@
 		<c:forEach var="product" items="${productList}">
 			<tr>
 				<td>${product.productId}</td>
-				<td>${product.productName}</td>
+				<td><a href="${pageContext.request.contextPath}/admin/product/productDetails/${product.productId}">${product.productName}</a></td>
 				<td>${product.categoryName}</td>
 				<td>${product.brand}</td>
 				<c:if test="${product.weight != 0 && product.count == 0}">

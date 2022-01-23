@@ -1,7 +1,10 @@
 package edu.kosmo.pse.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.pse.vo.MemberVO;
 
@@ -17,4 +20,8 @@ public interface MemberMapper {
 	// 가입시 권한 설정
 	@Insert("insert into AUTHORITIES values(#{userId},'ROLE_USER')")
 	public void insertAuthorities(MemberVO memberVO);
+	
+	// 회원 목록을 불러오기
+	@Select("SELECT * FROM member m, authorities a WHERE m.user_id = a.user_id")
+	public List<MemberVO> getMemberList();
 }

@@ -15,6 +15,7 @@
 <h1>회원 관리</h1>
 
 <h3>[<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]</h3>
+<h3>[<a href="<c:url value="/admin/product/manageProduct" />">상품 관리</a>]</h3>
 
 </body>
 </html>

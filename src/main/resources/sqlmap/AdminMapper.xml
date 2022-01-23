@@ -41,7 +41,7 @@
 		p.stock, c.category_name, i.img_id, i.product_id, i.img_name,
 		i.img_extension, i.img_path FROM product p
 		LEFT JOIN product_category c ON p.category_id = c.category_id
-		LEFT JOIN product_image i ON p.product_id = i.product_id
+		LEFT JOIN product_image i ON p.product_id = i.product_id ORDER BY p.product_id DESC
 	</select>
 	
 	<select id="getProduct" resultMap="productMap">
@@ -59,6 +59,12 @@
 		(PRODUCT_SEQ.nextval, #{productName}, #{categoryId}, #{brand}, 
 		#{weight}, #{count}, #{productPrice}, SYSDATE, 0, #{stock})
 	</insert>
+	
+	<update id="updateProduct">
+		UPDATE product SET product_name = #{productName}, category_id = #{categoryId}, 
+		brand = #{brand}, weight = #{weight}, count = #{count}, product_price = #{productPrice}, 
+		stock = #{stock} WHERE product_id = #{productId}
+	</update>
 	
 	<!-- 
 	<insert id="insertProductImg">

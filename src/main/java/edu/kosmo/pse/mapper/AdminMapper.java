@@ -25,7 +25,12 @@ public interface AdminMapper {
 	@Insert("INSERT INTO product_image VALUES (IMG_SEQ.nextval, #{productId}, #{imgName}, #{imgExtension}, #{imgPath})")
 	public void insertProductImg(ProductImageVO imageVO);
 	
+	// 상품 삭제
 	@Delete("DELETE FROM product WHERE product_id = #{productId}")
 	public void deleteProduct(int productId);
+	
+	// 상품 수정
+	public void updateProduct(ProductVO productVO);
+	
 	
 }

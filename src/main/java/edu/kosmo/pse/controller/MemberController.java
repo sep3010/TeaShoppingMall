@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import edu.kosmo.pse.service.AdminService;
 import edu.kosmo.pse.service.MemberService;
 import edu.kosmo.pse.vo.MemberVO;
 import lombok.AllArgsConstructor;
