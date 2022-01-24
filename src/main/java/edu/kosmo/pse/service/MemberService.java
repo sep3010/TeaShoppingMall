@@ -37,5 +37,10 @@ public class MemberService {
 		
 	}
 	
+	public MemberVO getMember(String userId) {
+		log.info("getMember()...");
+		return memberMapper.getMember(userId);
+	}
+	
 	
 }

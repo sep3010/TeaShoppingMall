@@ -37,19 +37,18 @@
 	
 	
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="#">로고</a>
+	  <a class="navbar-brand" href="#">Navbar</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    
+	    <span class="navbar-toggler-icon"></span>
 	  </button>
 	
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        <a class="nav-link dropdown-toggle active" href="/main/tea" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	          TEA
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <h4 class="dropdown-header"><a href="${pageContext.request.contextPath}/main/tea">Tea</a></h4>	
 	          <a class="dropdown-item" href="#">Black Tea</a>
 	          <a class="dropdown-item" href="#">Green Tea</a>
 	          <a class="dropdown-item" href="#">Oolong</a>
@@ -86,7 +85,26 @@
 	  </div>
 	</nav>
 	
+	<section>
+		<c:forEach var="product" items="${productList}">
+			<div class="card" style="width: 18rem;">
+			  <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+			  <div class="card-body">
+			    <h5 class="card-title">
+			    	<a href="${pageContext.request.contextPath}/main/productDetails/${product.productId}" class="active">${product.productName}</a>
+			    </h5>
+			    <a href="#" class="btn btn-primary">위시리스트</a>
+			    <a href="#" class="btn btn-primary">장바구니</a>
+			  </div>
+			</div>		
+		
+		
+		</c:forEach>
+
 	
+	
+	
+	</section>
 	
 	
 </body>

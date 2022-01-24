@@ -6,19 +6,43 @@
 <html lang="ko">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-   <title>유저 페이지</title>
+   <title>마이 페이지</title>
 </head>
 
 <body>
 
-<h1>유저 페이지 입니다.</h1>
+<h1>마이 페이지</h1>
 
-<p>principal: <sec:authentication property="principal"/></p>
-<%-- <p>EmpVO: <sec:authentication property="principal.emp"/></p>
-<p>사용자이름: <sec:authentication property="principal.emp.ename"/></p>
-<p>사용자월급: <sec:authentication property="principal.emp.sal"/></p>
-<p>사용자입사일자: <sec:authentication property="principal.emp.hiredate"/></p> --%>
-<p><a href="<c:url value="/" />">홈</a></p>
+<p>
+	<a href="${pageContext.request.contextPath}/user/userDetails">회원정보 수정</a>
+</p>
+
+<p>
+	<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+</p>
+
+<table width="700" border="1">
+	<tr>
+		<td>적립금</td>
+		<td>구매 등급</td>
+	</tr>
+	<tr>
+		<td>${member.point}</td>
+		<td>${member.purchaseGrade}</td>
+	</tr>
+	<tr>
+		<td>
+			<a href="${pageContext.request.contextPath}/user/userWish">위시리스트</a>
+		</td>
+		<td>
+			<a href="${pageContext.request.contextPath}/user/orders">주문 내역</a>
+		</td>
+	</tr>
+	
+</table>
+
+
+<h3><a href="<c:url value="/" />">홈</a></h3>
 
 </body>
 </html>

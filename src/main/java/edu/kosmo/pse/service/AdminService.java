@@ -65,7 +65,7 @@ public class AdminService {
 		adminMapper.updateProduct(productVO);		
 	}
 	
-	// 회원 목록 조회
+	// 전체 회원 목록 조회
 	public List<MemberVO> getMemberList() {
 		log.info("getMemberList()...");
 		return memberMapper.getMemberList();	

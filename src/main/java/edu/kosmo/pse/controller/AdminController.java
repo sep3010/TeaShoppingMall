@@ -109,7 +109,7 @@ public class AdminController {
 	@GetMapping("/member/manageMember") // 회원 관리
 	public ModelAndView manageMember(ModelAndView view) {
 		log.info("manageMember..");	
-		view.addObject("member", adminService.getMemberList());
+		view.addObject("memberList", adminService.getMemberList());
 		view.setViewName("admin/member/manageMember");		
 		return view;
 	}

@@ -21,7 +21,6 @@ public interface MemberMapper {
 	@Insert("insert into AUTHORITIES values(#{userId},'ROLE_USER')")
 	public void insertAuthorities(MemberVO memberVO);
 	
-	// 회원 목록을 불러오기
-	@Select("SELECT * FROM member m, authorities a WHERE m.user_id = a.user_id")
+	// 전체 회원 목록을 불러오기
 	public List<MemberVO> getMemberList();
 }

@@ -100,18 +100,6 @@
 			<td colspan="10"><a href="${pageContext.request.contextPath}/admin/product/addProductForm">상품 등록</a></td>
 		</tr>
 	</table>
-	
-	<c:if test="${pageMaker.pre}">
-		<a href="${pageContext.request.contextPath}/admin/product/manageProduct/${pageMaker.startPage - 1}"> « </a>
-	</c:if>
-	
-	<c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-		<a href="${pageContext.request.contextPath}/admin/product/manageProduct/${idx}" id="pageNum">${idx}</a>
-	</c:forEach>
-	
-	<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-		<a href="${pageContext.request.contextPath}/admin/product/manageProduct/${pageMaker.endPage + 1}"> » </a>
-	</c:if>	
 
 
 <h3>[<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]</h3>

@@ -26,12 +26,21 @@
 	</resultMap>
 
 	<select id="getMember" resultMap="memberMap">
-		SELECT * FROM member m, authorities a WHERE m.user_id = a.user_id AND m.user_id = #{userId}
+		SELECT m.user_id, m.password, m.user_name, m.birth,
+		m.phone, m.email, m.zip_code, m.address, m.platform, 
+		m.purchase_grade, a.authority FROM member m, authorities a 
+		WHERE m.user_id = a.user_id AND m.user_id = #{userId}
 	</select>
 
 	<insert id="insertMember">
 		INSERT INTO member VALUES (#{userId}, #{password}, #{userName}, #{birth}, #{phone}, #{email}, #{zipCode}, #{address}, null, 0, #{purchaseGrade})
 	</insert>
 
+	<select id="getMemberList" resultMap="memberMap">
+		SELECT m.user_id, m.password, m.user_name, m.birth,
+		m.phone, m.email, m.zip_code, m.address, m.platform, 
+		m.purchase_grade, a.authority FROM member m, authorities a 
+		WHERE m.user_id = a.user_id
+	</select>
 
 </mapper>	
