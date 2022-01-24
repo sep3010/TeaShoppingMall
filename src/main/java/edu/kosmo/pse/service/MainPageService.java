@@ -24,6 +24,13 @@ public class MainPageService {
 		return pageMapper.getAllTeaList();		
 	}
 	
+	// 상품 중 가테고리별 상품 목록
+	public List<ProductVO> getCategoryList(int categoryId) {
+		log.info("getCategoryList()...");
+		return pageMapper.getCategoryList(categoryId);
+	}
+	
+	
 	// 상품 상세 내역 조회
 	public ProductVO getProduct(int productId) {
 		log.info("getProduct()...");

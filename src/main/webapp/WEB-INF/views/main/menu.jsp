@@ -6,7 +6,22 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/include/header.jspf" %>
-<title>Home</title>
+<title>Tea</title>
+<script type="text/javascript">
+	$(function () {
+		if(${product.weight} != 0){
+			$('#pName').text("${product.productName} ${product.weight}g");
+		}
+		else{
+			$('#pName').text("${product.productName}");
+		}
+	  
+	    
+	    
+	 
+	});
+
+</script>
 
 </head>
 <body>    <!-- 로그인 되지 않았다면 참 -->
@@ -74,7 +89,34 @@
 	  </div>
 	</nav>
 	
+	<section class="container">
+		<div class="row">
+			<c:forEach var="product" items="${productList}">
+				<div class="card my-4 mx-4" style="width: 18rem;">
+	                <img class="card-img-top" src="" alt="Card image cap">
+	                <div class="card-body">
+	                <h5 class="card-title">
+	                    <a href="${pageContext.request.contextPath}/main/menuDetails/${product.productId}" class="active">
+	                        <c:choose>
+	                            <c:when test="${product.weight != 0}">
+	                                ${product.productName} ${product.weight}g			    			
+	                            </c:when>
+	                            <c:otherwise>
+	                                ${product.productName}
+	                            </c:otherwise>		    		
+	                        </c:choose>		    		
+	                    </a>
+	                </h5>
+	                <a href="#" class="btn btn-primary">위시리스트</a>
+	                <a href="#" class="btn btn-primary">장바구니</a>
+	                </div>
+	            </div>				
+			</c:forEach>
+		</div>
 	
+	
+	
+	</section>
 	
 	
 </body>
