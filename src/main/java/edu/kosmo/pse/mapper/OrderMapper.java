@@ -2,35 +2,31 @@ package edu.kosmo.pse.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
-import edu.kosmo.pse.vo.ProductImageVO;
-import edu.kosmo.pse.vo.ProductVO;
+import edu.kosmo.pse.vo.CartVO;
+
 
 @Mapper
 public interface OrderMapper {
 	
-	// 등록되어 있는 상품들을 조회
-	public List<ProductVO> getProductList();
+	// 로그인한 회원의 장바구니 내역 불러오기
+	public List<CartVO> getCartList(String userId);
 	
-	// 상품 상세 정보 조회
-	public ProductVO getProduct(int productId);
+	// 장바구니에 상품 넣기 (메인 메뉴 화면에서 장바구니에 담기를 눌렀을 경우)
+	public void insertCart(@Param("productId") int productId, @Param("cartPrice") int cartPrice, @Param("userId") String userId);
 	
-	// 상품 등록
-	public void insertProduct(ProductVO productVO);
+	// 로그인한 회원의 기존 장바구니에 같은 상품이 있는지 확인
+	public CartVO getInCartProduct(@Param("productId") int productId, @Param("userId") String userId);
 	
-	// 상품 이미지 등록
-	@Insert("INSERT INTO product_image VALUES (IMG_SEQ.nextval, #{productId}, #{imgName}, #{imgExtension}, #{imgPath})")
-	public void insertProductImg(ProductImageVO imageVO);
+	// 상품 가격 불러오기
+	@Select("SELECT product_price FROM product WHERE product_id = #{productId}")
+	public int getProductPrice(int productId);
 	
-	// 상품 삭제
-	@Delete("DELETE FROM product WHERE product_id = #{productId}")
-	public void deleteProduct(int productId);
-	
-	// 상품 수정
-	public void updateProduct(ProductVO productVO);
+	// 카트에 담겨있는 상품의 수량과 가격을 바꾼다.
+	public void updateCart(@Param("productId") int productId, @Param("cartAmount") int cartAmount, @Param("cartPrice") int cartPrice, @Param("userId") String userId);
 	
 	
 }

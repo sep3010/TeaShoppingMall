@@ -14,7 +14,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
-    <title>상품 관리</title>
+    <title>공지사항</title>
     <script type="text/javascript">
 		$(document).ready(function () {
 		    $(".delete").click( function (event) {
@@ -41,23 +41,7 @@
 		    
 		    });
 		    
-		    $("#pageNum").click( function (event) {
-		    	event.preventDefault();
-		    	
-		    	const amount = 10;
-		    	
-		    	$.ajax({
-		    		type : "GET",
-		    		url : $(this).attr("href"),
-		    		
-		    		
-		    	});
-		    	
-		    	
-			})
-		    
-		 
-		});
+	
     </script>
 </head>
 

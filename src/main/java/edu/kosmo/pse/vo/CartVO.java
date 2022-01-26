@@ -30,7 +30,7 @@ public class CartVO {
 	private int cartAmount;
 	private int cartPrice;
 	private Date cartInDate;
-	private int userId;
+	private String userId;
 	
 	private String productName;
 	private int weight;
