@@ -50,10 +50,16 @@ public class OrderService {
 			log.info("cartPrice : " + cartPrice);
 			orderMapper.insertCart(productId, cartPrice, userId);
 		}
+				
+	}
+	
+	// 장바구니에 있는 상품 하나 삭제하기
+	@Transactional(rollbackFor = Exception.class)
+	public void deldetCart(int cartId) {
+		log.info("deldetCart()..");
 		
-		
-		
-	};
+		orderMapper.deleteCart(cartId);				
+	}
 	
 	
 }

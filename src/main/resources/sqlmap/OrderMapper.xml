@@ -50,7 +50,8 @@
 		UPDATE cart SET cart_amount = #{cartAmount}, 
 		cart_price = #{cartPrice} WHERE user_id = #{userId} And product_id = #{productId}
 	</update>
-	
+
+
 	
 	<!--
 	<select id="getProductList" resultMap="productMap">

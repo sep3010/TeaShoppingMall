@@ -17,6 +17,7 @@
 $(document).ready(function () {
 	
     $("#inCart").click(function(event) {
+    	
        event.preventDefault();
        console.log("ajax 호출중..");
        
@@ -24,14 +25,15 @@ $(document).ready(function () {
        console.log("currentUrl : " + currentUrl);
        console.log($(this).attr("href")); 
        
-       /* post 방식일때....
+       
+       /* // post 방식일때....
        var productId = $(this).val();
        var currentUrl = window.location.href;
        var cartAmount = 1;
        
        var data = {
     		productId : productId,
-    		cartAmount : cartAmount
+    		// cartAmount : cartAmount
        };
        
        console.log(productId);
@@ -47,19 +49,18 @@ $(document).ready(function () {
        
    	   $.ajax({
               type : "POST",
-              url : "cart.do",
+              url : $(this).attr("href"),
               cache : false,
-              processData : false,
               contentType:'application/json; charset="UTF-8"',
               data : JSON.stringify(data),
               success: function (moveCart, data) {       
               	 console.log(data); 
-              	console.log("ajax 통신 성공");
+              	 console.log("ajax 통신 성공");
               	 if(moveCart == true){
-              	 	window.location.href = "${pageContext.request.contextPath}//user/cart";
+              	 	window.location.assign = "${pageContext.request.contextPath}/user/cart";
               	 }
               	 else{
-              		window.location.href = currentUrl;
+              		window.location.assign = currentUrl;
                 }
               },
               error: function (e) {
@@ -67,15 +68,17 @@ $(document).ready(function () {
               }         
           
          }); 
-        */
+   		*/
         
+       
        let moveCart = confirm("상품을 카드에 담았습니다. 카트로 이동하시겠습니까?"); 
         
        $.ajax({
            type : "GET",
            url : $(this).attr("href"),
-           success: function (moveCart) {       
+           success: function (event, moveCart) {       
            	 console.log("ajax 통신 성공");
+           	event.preventDefault();
            	 
            	 if(moveCart == true){
            		console.log("카트로 이동");
@@ -91,7 +94,7 @@ $(document).ready(function () {
            }         
        
       }); 
-        
+       
            
     });  // end click()
    
@@ -186,9 +189,9 @@ $(document).ready(function () {
 		                    </a>
 		                </h5>
 		                <a href="#" class="btn btn-primary">위시리스트</a>
-		           
+		           		<%-- <a href="cart.do" id="inCart" class="btn btn-primary">장바구니</a> --%>
 		                <a href="${pageContext.request.contextPath}/user/cart/${product.productId}" id="inCart" class="btn btn-primary" data-productId='${product.productId}'>장바구니</a>
-		               
+		              
 	                </div>
 	            </div>				
 			</c:forEach>

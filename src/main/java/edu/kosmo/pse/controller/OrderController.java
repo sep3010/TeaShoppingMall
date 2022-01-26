@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,17 +34,17 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	/* 안됌....ㅠㅠ 질문하기
+	/* // 안됌....ㅠㅠ 질문하기
 	@ResponseBody
-	@PostMapping("main/menu/cart.do")
-	public ResponseEntity<String> inCart(@RequestBody CartVO cartVO, Principal principal) {
+	@PostMapping("cart.do")
+	public ResponseEntity<String> inCart(@RequestBody CartVO cartVO, Principal principal, Model model) {
 		ResponseEntity<String> entity = null;
 		log.info("inCart.. cartVO" + cartVO);
 		
-		// {"productId":"46","cartAmount":1}
+		// {"productId":"46"}
 		
 		try {
-			orderService.inCart(cartVO.getProductId(), cartVO.getCartAmount(), principal.getName());			
+			orderService.inCart(cartVO.getProductId(), principal.getName());			
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
 			
@@ -53,6 +55,7 @@ public class OrderController {
 	}
 	*/
 	
+
 	@GetMapping("/user/cart/{productId}")
 	public ModelAndView inCart(ModelAndView view, ProductVO productVO, Principal principal) {
 		log.info("inCart.. productVO " + productVO);
@@ -66,7 +69,7 @@ public class OrderController {
 	
 		return view;
 	}
-	
+
 	
 	@GetMapping("/user/cart")
 	public ModelAndView getCart(ModelAndView view, Principal principal) {
@@ -78,6 +81,23 @@ public class OrderController {
 	}
 	
 	
+	@DeleteMapping("/user/cart/{cartId}")
+	public ResponseEntity<String> rest_delete(CartVO cartVO, Model model) {
+		ResponseEntity<String> entity = null;
+		log.info("delete cart..");
+		log.info("cartId : " + cartVO.getCartId());
+		
+		try {
+			orderService.deldetCart(cartVO.getCartId());
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+
+		return entity;
+	}
 
 
 

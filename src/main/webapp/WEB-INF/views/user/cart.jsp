@@ -15,11 +15,9 @@
     <title>장바구니</title>
 	<script type="text/javascript">
 		$(document).ready( function() {
-			$(".a-delete").click(function(event) {
-			       //prevendDefault()는 href로 연결해 주지 않고 
-			       //단순히 click에 대한 처리를 하도록 해준다.
+			$(".delete").click(function(event) {
 			       event.preventDefault();
-			       console.log("ajax 호출전");
+			       console.log("ajax 호출!");
 			       
 			       let trObj = $(this).parent().parent();
 			       
@@ -117,7 +115,6 @@
 	<table width="700" border="1">
 		<tr>
 			<td>선택</td>
-			<td>번호</td>
 			<td>상품</td>
 			<td>상품명</td>
 			<td>수량</td>
@@ -131,7 +128,6 @@
 					<h2>장바구니에 담긴 상품이 없습니다.</h2>
 				</c:if>
 				<td><input type="checkbox" name="productId" value="${productId}"></td>
-				<td>${status.count}</td>
 				<td>상품 이미지</td>
 				<td>${cart.productName}</td>
 				<td>${cart.cartAmount}</td>
