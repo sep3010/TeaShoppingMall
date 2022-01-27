@@ -78,7 +78,7 @@ $(document).ready(function () {
            url : $(this).attr("href"),
            success: function (event, moveCart) {       
            	 console.log("ajax 통신 성공");
-           	event.preventDefault();
+           	 event.preventDefault();
            	 
            	 if(moveCart == true){
            		console.log("카트로 이동");

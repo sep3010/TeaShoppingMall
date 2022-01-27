@@ -72,6 +72,16 @@
 	      <li class="nav-item active">
 	        <a class="category nav-link" href="${pageContext.request.contextPath}/main/menu/${8}">Gift</a>
 	      </li>	
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          BOARD
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice">Notice</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review">Review</a>
+	        </div>
+	      </li>
 	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
 	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
