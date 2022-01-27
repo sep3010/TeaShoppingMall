@@ -16,12 +16,12 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
-    $("#inCart").submit(function(event) {
-       event.preventDefault();
+    $(".inCart").submit(function() {
+       // event.preventDefault();
        console.log("ajax 호출중..");
        
        
-       let productId = $("#productId").val();
+       let productId = $(this).find(".productId").val();
        let currentUrl = window.location.href;
        let cartAmount = 1;
        
@@ -41,19 +41,19 @@ $(document).ready(function () {
        
    	   $.ajax({
               type : "POST",
-              url : "cart.do",
+              url : "${pageContext.request.contextPath}//cart",
               cache : false,
-              processData : false,
               contentType:'application/json; charset="UTF-8"',
               data : JSON.stringify(data),
-              success: function (moveCart, data) {       
-              	 console.log(data); 
-              	 console.log("ajax 통신 성공");
-              	 if(moveCart == true){
-              	 	window.location.href = "${pageContext.request.contextPath}//user/cart";
+              success: function (moveCart) {       
+              	 
+              	 if(moveCart == false){
+              		// $(this).find(".submit").attr("onsubmit","event.preventDefault();");             		
+              		console.log("ajax 통신 성공");
+              		
               	 }
               	 else{
-              		window.location.href = currentUrl;
+              		console.log("장바구니 이동");
                 }
               },
               error: function (e) {
@@ -156,9 +156,9 @@ $(document).ready(function () {
 		                </h5>
 		                <a href="#" class="btn btn-primary">위시리스트</a>
 	
-		                <form action="cart.do" method="post" id="inCart">
-		                	<input type="hidden" id="productId" name="productId" value="${product.productId}">
-		                	<input type="submit" value="장바구니" class="btn">
+		                <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
+		                	<input type="hidden" class="productId" name="productId" value="${product.productId}">
+		                	<input type="submit" class="submit btn" value="장바구니" >
 		                </form>
 
 	                </div>

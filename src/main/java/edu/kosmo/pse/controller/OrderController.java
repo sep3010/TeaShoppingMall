@@ -33,8 +33,8 @@ public class OrderController {
 	private OrderService orderService;
 	
 
-	@ResponseBody
-	@PostMapping("cart.do")
+
+	@PostMapping("/user/cart")
 	public ResponseEntity<String> inCart(@RequestBody CartVO cartVO, Principal principal) {
 		ResponseEntity<String> entity = null;
 		log.info("inCart.. cartVO" + cartVO);
@@ -54,6 +54,17 @@ public class OrderController {
 		return entity;
 	}
 	
+	/*
+	// confirm 창에서 이동 장바구니로 이동.
+	@PostMapping("/user/cart")
+	public ModelAndView confirmGetCart(ModelAndView view, Principal principal) {
+		log.info("getCart()..");
+		view.addObject("userId", principal.getName());
+		view.addObject("cartList", orderService.getCartList(principal.getName()));
+		view.setViewName("user/cart");
+		return view;
+	}
+	*/
 
 	
 	@GetMapping("/user/cart")
