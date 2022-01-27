@@ -32,17 +32,19 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	/* 안됌....ㅠㅠ 질문하기
+
 	@ResponseBody
-	@PostMapping("main/menu/cart.do")
+	@PostMapping("cart.do")
 	public ResponseEntity<String> inCart(@RequestBody CartVO cartVO, Principal principal) {
 		ResponseEntity<String> entity = null;
 		log.info("inCart.. cartVO" + cartVO);
+		log.info("productId : " + cartVO.getProductId());
+		log.info("userId : " + principal.getName());
 		
 		// {"productId":"46","cartAmount":1}
 		
 		try {
-			orderService.inCart(cartVO.getProductId(), cartVO.getCartAmount(), principal.getName());			
+			orderService.inCart(cartVO.getProductId(), principal.getName());			
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
 			
@@ -51,22 +53,8 @@ public class OrderController {
 		
 		return entity;
 	}
-	*/
 	
-	@GetMapping("/user/cart/{productId}")
-	public ModelAndView inCart(ModelAndView view, ProductVO productVO, Principal principal) {
-		log.info("inCart.. productVO " + productVO);
-		
-		int productId = productVO.getProductId();
-		log.info("productId : " + productId);
-			
-		orderService.inCart(productId, principal.getName());
-		
-		view.setViewName("redirect:/user/cart");
-	
-		return view;
-	}
-	
+
 	
 	@GetMapping("/user/cart")
 	public ModelAndView getCart(ModelAndView view, Principal principal) {
