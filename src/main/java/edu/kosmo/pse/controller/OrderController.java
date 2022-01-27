@@ -34,14 +34,14 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	/* // 안됌....ㅠㅠ 질문하기
-	@ResponseBody
-	@PostMapping("cart.do")
-	public ResponseEntity<String> inCart(@RequestBody CartVO cartVO, Principal principal, Model model) {
+	@PostMapping("/user/cart")
+	public ResponseEntity<String> inCart(@RequestBody CartVO cartVO, Principal principal) {
 		ResponseEntity<String> entity = null;
 		log.info("inCart.. cartVO" + cartVO);
+		log.info("productId : " + cartVO.getProductId());
+		log.info("userId : " + principal.getName());
 		
-		// {"productId":"46"}
+		// {"productId":"46","cartAmount":1}
 		
 		try {
 			orderService.inCart(cartVO.getProductId(), principal.getName());			
@@ -53,23 +53,18 @@ public class OrderController {
 		
 		return entity;
 	}
-	*/
 	
-
-	@GetMapping("/user/cart/{productId}")
-	public ModelAndView inCart(ModelAndView view, ProductVO productVO, Principal principal) {
-		log.info("inCart.. productVO " + productVO);
-		
-		int productId = productVO.getProductId();
-		log.info("productId : " + productId);
-			
-		orderService.inCart(productId, principal.getName());
-		
-		view.setViewName("redirect:/user/cart");
-	
+	/*
+	// confirm 창에서 이동 장바구니로 이동.
+	@PostMapping("/user/cart")
+	public ModelAndView confirmGetCart(ModelAndView view, Principal principal) {
+		log.info("getCart()..");
+		view.addObject("userId", principal.getName());
+		view.addObject("cartList", orderService.getCartList(principal.getName()));
+		view.setViewName("user/cart");
 		return view;
 	}
-
+	*/
 	
 	@GetMapping("/user/cart")
 	public ModelAndView getCart(ModelAndView view, Principal principal) {

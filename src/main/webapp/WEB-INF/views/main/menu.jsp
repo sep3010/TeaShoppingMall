@@ -16,92 +16,56 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
-    $("#inCart").click(function(event) {
-    	
+    $(".inCart").submit(function() {
        event.preventDefault();
        console.log("ajax 호출중..");
        
+       
+       let productId = $(this).find(".productId").val();
        let currentUrl = window.location.href;
-       console.log("currentUrl : " + currentUrl);
-       console.log($(this).attr("href")); 
-       
-       
-       /* // post 방식일때....
-       var productId = $(this).val();
-       var currentUrl = window.location.href;
-       var cartAmount = 1;
+       let cartAmount = 1;
        
        var data = {
     		productId : productId,
-    		// cartAmount : cartAmount
+    		cartAmount : cartAmount
        };
        
-       console.log(productId);
-       
-       console.log(currentUrl);
-       
+       console.log("productId : " + productId);      
+       console.log("currentUrl : " + currentUrl);      
        console.log(JSON.stringify(data));
        
        
        // var destinationURL = '/pse/main/menu/' + productId;
-       let moveCart = confirm("상품을 카트에 담았습니다. 카트로 이동하시겠습니까?");
+       let moveCart = confirm("상품을 카트에 담았습니다. 장바구니로 이동하시겠습니까?");
        
        
    	   $.ajax({
               type : "POST",
-              url : $(this).attr("href"),
+              url : "${pageContext.request.contextPath}/user/cart",
               cache : false,
               contentType:'application/json; charset="UTF-8"',
               data : JSON.stringify(data),
-              success: function (moveCart, data) {       
-              	 console.log(data); 
-              	 console.log("ajax 통신 성공");
-              	 if(moveCart == true){
-              	 	window.location.assign = "${pageContext.request.contextPath}/user/cart";
+              success: function () {       
+            	 console.log("ajax 통신 성공");
+              	 if(moveCart == false){  
+              		console.log("장바구니 이동 안함");            		
               	 }
               	 else{
-              		window.location.assign = currentUrl;
+              		console.log("장바구니 이동");
+              		location.assign("${pageContext.request.contextPath}/user/cart");
                 }
               },
               error: function (e) {
                   console.log(e);
               }         
           
-         }); 
-   		*/
-        
-       
-       let moveCart = confirm("상품을 카드에 담았습니다. 카트로 이동하시겠습니까?"); 
-        
-       $.ajax({
-           type : "GET",
-           url : $(this).attr("href"),
-           success: function (event, moveCart) {       
-           	 console.log("ajax 통신 성공");
-           	 event.preventDefault();
-           	 
-           	 if(moveCart == true){
-           		console.log("카트로 이동");
-           	 	window.location.href = "${pageContext.request.contextPath}/user/cart";
-           	 }
-           	 else{
-           		console.log("카트로 이동 안함");
-           		window.location.href = currentUrl;
-             }
-           },
-           error: function (e) {
-               console.log(e);
-           }         
-       
-      }); 
-       
+         });       
            
     });  // end click()
    
     
  
 });
-
 </script>
 
 </head>
@@ -115,7 +79,7 @@ $(document).ready(function () {
 	<sec:authorize access="isAuthenticated()">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<p>${userId} 관리자님 환영합니다.</p>
-			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
+			<p><a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_USER')">
 			<p>${userId}님 환영합니다.</p>
@@ -189,9 +153,12 @@ $(document).ready(function () {
 		                    </a>
 		                </h5>
 		                <a href="#" class="btn btn-primary">위시리스트</a>
-		           		<%-- <a href="cart.do" id="inCart" class="btn btn-primary">장바구니</a> --%>
-		                <a href="${pageContext.request.contextPath}/user/cart/${product.productId}" id="inCart" class="btn btn-primary" data-productId='${product.productId}'>장바구니</a>
-		              
+	
+		                <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
+		                	<input type="hidden" class="productId" name="productId" value="${product.productId}">
+		                	<input type="submit" class="submit btn" value="장바구니" >
+		                </form>
+
 	                </div>
 	            </div>				
 			</c:forEach>
