@@ -34,16 +34,16 @@
 		<result property="categoryName" column="category_name" />
 	</resultMap>
 	
-	<select id="getProductList" resultMap="productMap">
+<!-- 	<select id="getProductList" resultMap="productMap">
 		SELECT p.product_id,
 		p.product_name, p.category_id, p.brand,
 		p.weight, p.count, p.product_price, p.update_date, p.cell_count,
 		p.stock, c.category_name FROM product p
 		LEFT JOIN product_category c ON p.category_id = c.category_id
 		ORDER BY p.product_id DESC
-	</select>
+	</select> -->
 	
-	<!--
+	
 	<select id="getProductList" resultMap="productMap">
 		<![CDATA[
 			SELECT * FROM (
@@ -58,7 +58,7 @@
 	         ) WHERE RNUM > (#{pageNum}-1) * 10
 	    ]]>     
 	</select>
-	-->
+	
 	
 	<select id="getProduct" resultMap="productMap">
 		SELECT p.product_id, p.product_name, p.category_id, p.brand,

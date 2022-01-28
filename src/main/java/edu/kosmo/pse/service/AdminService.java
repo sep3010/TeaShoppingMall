@@ -24,11 +24,27 @@ public class AdminService {
 	@Autowired
 	private MemberMapper memberMapper;
 	
-	// 등록된 상품들 리스트 불러오기
+	/*
+	// 등록된 상품들 리스트 불러오기 (페이징 적용 전)
 	public List<ProductVO> getProductList() {
 		log.info("getProductList()...");
 		return adminMapper.getProductList();		
 	}
+	*/
+	
+	// 페이지 번호에 맞게 등록된 상품들 리스트 불러오기 (10개씩)
+	public List<ProductVO> getProductList(int pageNum) {
+		log.info("getProductList()...");
+		
+		return adminMapper.getProductList(pageNum);		
+	}
+	
+	// 총 상품 개수
+	public int getProductCount() {
+		log.info("getProductCount()...");
+		return adminMapper.getProductCount();
+	}
+	
 	
 	// 상품 상세 내역 조회
 	public ProductVO getProduct(int productId) {

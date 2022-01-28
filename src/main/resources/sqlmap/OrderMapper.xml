@@ -43,7 +43,7 @@
 	
 	<insert id="insertCart" parameterType="map">
 		INSERT INTO cart VALUES (CART_SEQ.nextval, #{productId}, 
-		1, #{cartPrice}, SYSDATE, #{userId})	
+		#{cartAmount}, #{cartPrice}, SYSDATE, #{userId})	
 	</insert>
 	
 	<update id="updateCart" parameterType="map">

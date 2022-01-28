@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import edu.kosmo.pse.vo.ProductImageVO;
 import edu.kosmo.pse.vo.ProductVO;
@@ -12,8 +13,17 @@ import edu.kosmo.pse.vo.ProductVO;
 @Mapper
 public interface AdminMapper {
 	
-	// 등록되어 있는 상품들을 조회
+	/*
+	// 등록되어 있는 상품들을 조회 (페이징 적용 전)
 	public List<ProductVO> getProductList();
+	*/
+	
+	// 등록되어 있는 상품들을 조회
+	public List<ProductVO> getProductList(int pageNum);
+	
+	// 전체 상품 개수
+	@Select("SELECT count(*) AS total FROM product")
+	public int getProductCount();
 	
 	// 상품 상세 정보 조회
 	public ProductVO getProduct(int productId);

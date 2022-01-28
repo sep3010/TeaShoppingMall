@@ -44,7 +44,7 @@ public class OrderController {
 		// {"productId":"46","cartAmount":1}
 		
 		try {
-			orderService.inCart(cartVO.getProductId(), principal.getName());			
+			orderService.inCart(cartVO.getProductId(), cartVO.getCartAmount(), principal.getName());			
 			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
 			
@@ -54,17 +54,6 @@ public class OrderController {
 		return entity;
 	}
 	
-	/*
-	// confirm 창에서 이동 장바구니로 이동.
-	@PostMapping("/user/cart")
-	public ModelAndView confirmGetCart(ModelAndView view, Principal principal) {
-		log.info("getCart()..");
-		view.addObject("userId", principal.getName());
-		view.addObject("cartList", orderService.getCartList(principal.getName()));
-		view.setViewName("user/cart");
-		return view;
-	}
-	*/
 	
 	@GetMapping("/user/cart")
 	public ModelAndView getCart(ModelAndView view, Principal principal) {
@@ -75,7 +64,7 @@ public class OrderController {
 		return view;
 	}
 	
-	
+	// 카트 상품 한개 삭제
 	@DeleteMapping("/user/cart/{cartId}")
 	public ResponseEntity<String> rest_delete(CartVO cartVO, Model model) {
 		ResponseEntity<String> entity = null;

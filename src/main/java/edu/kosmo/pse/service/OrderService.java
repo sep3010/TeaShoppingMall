@@ -26,10 +26,9 @@ public class OrderService {
 	
 	// 장바구니에 상품 넣기
 	@Transactional(rollbackFor = Exception.class)
-	public void inCart(int productId, String userId) {
+	public void inCart(int productId, int cartAmount, String userId) {
 		log.info("insertCart()..");
 		log.info("productId : " + productId);
-		int cartAmount = 1;
 		
 		CartVO cartVO = orderMapper.getInCartProduct(productId, userId);
 		
@@ -48,7 +47,7 @@ public class OrderService {
 			
 			int cartPrice = productPrice;
 			log.info("cartPrice : " + cartPrice);
-			orderMapper.insertCart(productId, cartPrice, userId);
+			orderMapper.insertCart(productId, cartAmount, cartPrice, userId);
 		}
 				
 	}

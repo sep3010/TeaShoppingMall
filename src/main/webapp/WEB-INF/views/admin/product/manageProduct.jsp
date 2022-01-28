@@ -13,9 +13,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <title>상품 관리</title>
     <script type="text/javascript">
+	 	// csrf
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
+	    
 		$(document).ready(function () {
 		    $(".delete").click( function (event) {
 		       event.preventDefault();
@@ -24,9 +31,12 @@
 		       
 		       console.log($(this).attr("href"));
 		       
-		       $.ajax({	// type을 delete로 하면 계속 405 에러
-		           type : "GET", 
+		       $.ajax({	
+		           type : "DELETE", 
 		           url : $(this).attr("href"),
+		           beforeSend: function(xhr) {
+                       xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+                    },
 		           success: function (result) {       
 		           console.log(result); 
 		             if(result == "SUCCESS"){
@@ -39,22 +49,46 @@
 		       
 		       });   
 		    
-		    });
+		    }); // $(".delete").click
 		    
 		    $("#pageNum").click( function (event) {
 		    	event.preventDefault();
 		    	
-		    	const amount = 10;
+		    	let pageNum = $(this).find(".pagNum").data();
+		    	console.log("pageNum : " + pageNum);
+		    	
+		    	let paging = {
+		    		pageNum : pageNum
+		    	};
+				console.log(JSON.stringify(paging));
 		    	
 		    	$.ajax({
-		    		type : "GET",
+		    		type : "POST",
 		    		url : $(this).attr("href"),
-		    		
-		    		
+		    		cache : false,
+		            contentType:'application/json; charset="UTF-8"',
+		            paging : JSON.stringify(paging),
+		            beforeSend: function(xhr) {
+		                xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+		            },
+		            success: function (paging) { 
+		            	console.log("ajax 통신 성공");
+		            	console.log(paging);
+		            	productList = productList;
+		            	currentPageNum = currentPageNum;
+		            	pageMaker = pageMaker;
+		            	console.log(productList);
+		            	console.log(currentPageNum);
+		            	console.log(pageMaker);
+		             },
+		             error: function (e) {
+		                  console.log(e);
+		             } 
+		             
 		    	});
 		    	
 		    	
-			})
+			}); // $("#pageNum").click
 		    
 		 
 		});
@@ -108,6 +142,37 @@
 		</tr>
 	</table>
 
+	<!-- 페이징 바 -->
+
+	<c:if test="${pageMaker.pre}"> <!-- ${pageContext.request.contextPath}/product/manageProduct/ -->
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${pageMaker.startPage - 1}">&#171;</a>
+    </c:if>
+    
+    <c:if test="${currentPageNum > 1}">
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${currentPageNum - 1}">&lt;</a>
+    </c:if>
+
+      <!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
+    <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" >
+    	<c:choose>
+    		<c:when test="${idx eq currentPageNum}">
+    			<span>${idx}</span>
+    		</c:when>
+    		
+    		<c:otherwise>
+    			<a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${idx}">${idx}</a>
+    		</c:otherwise>	    	
+    	</c:choose>    	
+    </c:forEach>
+    
+    <c:if test="${currentPageNum < pageMaker.realEnd}">
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${currentPageNum + 1}">&gt;</a>
+    </c:if>
+      
+    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" date-pagNum="${pageMaker.endPage +1}">&#187;</a>
+    </c:if>
+    
 
 <h3>[<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]</h3>
 

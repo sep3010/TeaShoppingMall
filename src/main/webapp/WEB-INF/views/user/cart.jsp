@@ -12,9 +12,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+	
+	<!-- csrf meta tag -->
+	<meta name="_csrf" content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+	
     <title>장바구니</title>
 	<script type="text/javascript">
+		// csrf
+	    const token = $("meta[name='_csrf']").attr("content");
+	    const header = $("meta[name='_csrf_header']").attr("content");
+		
 		$(document).ready( function() {
+			
 			$(".delete").click(function(event) {
 			       event.preventDefault();
 			       console.log("ajax 호출!");
@@ -26,6 +36,9 @@
 			       $.ajax({
 			           type : "DELETE",
 			           url : $(this).attr("href"),
+			           beforeSend: function(xhr) {
+                           xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+                        },
 			           success: function (result) {       
 			           console.log(result); 
 			             if(result == "SUCCESS"){
@@ -46,7 +59,7 @@
 	</script>	
 </head>
 
-<body>
+<body>    <!-- 로그인 되지 않았다면 참 -->
 	<sec:authorize access="isAnonymous()">
 		<p>
 			<a href="<c:url value="/login/loginForm" />">로그인</a>
@@ -68,6 +81,8 @@
 			<input type="submit" value="로그아웃" class="btn" />
 		</form:form>
 	</sec:authorize>
+	<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+	
 	
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <a class="navbar-brand" href="/">Navbar</a>
@@ -101,6 +116,16 @@
 	      <li class="nav-item active">
 	        <a class="category nav-link" href="${pageContext.request.contextPath}/main/menu/${8}">Gift</a>
 	      </li>	
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          BOARD
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice">Notice</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review">Review</a>
+	        </div>
+	      </li>
 	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
 	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

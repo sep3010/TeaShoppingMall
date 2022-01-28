@@ -11,19 +11,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
 <title>Tea</title>
 
 <script type="text/javascript">
 $(document).ready(function () {
 	
     $(".inCart").submit(function() {
+    	
+       // csrf
+       var token = $("meta[name='_csrf']").attr("content");
+       var header = $("meta[name='_csrf_header']").attr("content");
+        	
        event.preventDefault();
        console.log("ajax 호출중..");
        
-       
        let productId = $(this).find(".productId").val();
        let currentUrl = window.location.href;
-       let cartAmount = 1;
+       const cartAmount = 1;
        
        var data = {
     		productId : productId,
@@ -33,11 +42,7 @@ $(document).ready(function () {
        console.log("productId : " + productId);      
        console.log("currentUrl : " + currentUrl);      
        console.log(JSON.stringify(data));
-       
-       
-       // var destinationURL = '/pse/main/menu/' + productId;
-       let moveCart = confirm("상품을 카트에 담았습니다. 장바구니로 이동하시겠습니까?");
-       
+                   
        
    	   $.ajax({
               type : "POST",
@@ -45,8 +50,12 @@ $(document).ready(function () {
               cache : false,
               contentType:'application/json; charset="UTF-8"',
               data : JSON.stringify(data),
-              success: function () {       
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader("X-CSRF-Token", "${_csrf.token}");
+               },
+              success: function () { 
             	 console.log("ajax 통신 성공");
+            	 let moveCart = confirm("상품을 카트에 담았습니다. 장바구니로 이동하시겠습니까?");            	 
               	 if(moveCart == false){  
               		console.log("장바구니 이동 안함");            		
               	 }
@@ -79,7 +88,7 @@ $(document).ready(function () {
 	<sec:authorize access="isAuthenticated()">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<p>${userId} 관리자님 환영합니다.</p>
-			<p><a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
+			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_USER')">
 			<p>${userId}님 환영합니다.</p>
@@ -126,6 +135,16 @@ $(document).ready(function () {
 	      <li class="nav-item active">
 	        <a class="category nav-link" href="${pageContext.request.contextPath}/main/menu/${8}">Gift</a>
 	      </li>	
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          BOARD
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice">Notice</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review">Review</a>
+	        </div>
+	      </li>
 	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
 	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -133,6 +152,7 @@ $(document).ready(function () {
 	    </form>
 	  </div>
 	</nav>
+	
 	
 	<section class="container">
 		<div class="row">

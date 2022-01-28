@@ -18,12 +18,13 @@
 		
 </head>
 
-<body>
+<body>    <!-- 로그인 되지 않았다면 참 -->
 	<sec:authorize access="isAnonymous()">
 		<p>
 			<a href="<c:url value="/login/loginForm" />">로그인</a>
 		</p>
 	</sec:authorize>
+	<!-- 로그인을 했다면 참 -->
 	<sec:authorize access="isAuthenticated()">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<p>${userId} 관리자님 환영합니다.</p>
@@ -74,13 +75,24 @@
 	      <li class="nav-item active">
 	        <a class="category nav-link" href="${pageContext.request.contextPath}/main/menu/${8}">Gift</a>
 	      </li>	
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          BOARD
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice">Notice</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review">Review</a>
+	        </div>
+	      </li>
 	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
 	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 	    </form>
 	  </div>
-	</nav>	
+	</nav>
+	
 	<table width="700" border="1">
 		<tr>
 			<td>상품번호</td>

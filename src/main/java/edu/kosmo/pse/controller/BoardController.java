@@ -1,6 +1,8 @@
 package edu.kosmo.pse.controller;
 
 
+import java.security.Principal;
+
 import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
@@ -31,10 +33,11 @@ public class BoardController {
 	@Inject
 	private BoardService boardService;
 	
-	@GetMapping("/notice") // 관리자 페이지
-	public ModelAndView getNoticeBoardList(ModelAndView view) {
+	@GetMapping("/notice") // 공지사항 계시판
+	public ModelAndView getNoticeBoardList(ModelAndView view, Principal principal) {
 		log.info("getNoticeBoardList..");	
 		view.addObject("boardList", boardService.getNoticeBoardList());
+		view.addObject("userId", principal.getName());
 		view.setViewName("main/board/notice");
 		return view;
 	}

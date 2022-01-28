@@ -18,7 +18,7 @@
 		
 </head>
 
-<body>
+<body>    
 
 <h1>상품 상세</h1>
 	<table width="700" border="1">

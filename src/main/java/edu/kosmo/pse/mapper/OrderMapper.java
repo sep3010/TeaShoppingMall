@@ -16,8 +16,8 @@ public interface OrderMapper {
 	// 로그인한 회원의 장바구니 내역 불러오기
 	public List<CartVO> getCartList(String userId);
 	
-	// 장바구니에 상품 넣기 (메인 메뉴 화면에서 장바구니에 담기를 눌렀을 경우)
-	public void insertCart(@Param("productId") int productId, 
+	// 장바구니에 상품 넣기 
+	public void insertCart(@Param("productId") int productId, @Param("cartAmount") int cartAmount,
 			@Param("cartPrice") int cartPrice, @Param("userId") String userId);
 	
 	// 로그인한 회원의 기존 장바구니에 같은 상품이 있는지 확인
