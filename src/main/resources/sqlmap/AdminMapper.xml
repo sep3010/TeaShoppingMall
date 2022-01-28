@@ -5,6 +5,7 @@
 
 <mapper namespace="edu.kosmo.pse.mapper.AdminMapper">
 	<resultMap type="edu.kosmo.pse.vo.ProductVO" id="productMap">
+		<result property="rownum" column="rownum" />
 		<result property="productId" column="product_id" />
 		<result property="productName" column="product_name" />
 		<result property="categoryId" column="category_id" />
