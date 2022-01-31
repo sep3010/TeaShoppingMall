@@ -51,6 +51,8 @@
 		    
 		    }); // $(".delete").click
 		    
+		    
+		    
 		    $("#pageNum").click( function (event) {
 		    	event.preventDefault();
 		    	
@@ -63,7 +65,7 @@
 				console.log(JSON.stringify(paging));
 		    	
 		    	$.ajax({
-		    		type : "POST",
+		    		type : "GET",
 		    		url : $(this).attr("href"),
 		    		cache : false,
 		            contentType:'application/json; charset="UTF-8"',
@@ -89,6 +91,8 @@
 		    	
 		    	
 			}); // $("#pageNum").click
+			
+			
 		    
 		 
 		});
@@ -145,11 +149,11 @@
 	<!-- 페이징 바 -->
 
 	<c:if test="${pageMaker.pre}"> <!-- ${pageContext.request.contextPath}/product/manageProduct/ -->
-       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${pageMaker.startPage - 1}">&#171;</a>
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct/${}`" class="pagNum" date-pagNum="${pageMaker.startPage - 1}">&#171;</a>
     </c:if>
     
     <c:if test="${currentPageNum > 1}">
-       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${currentPageNum - 1}">&lt;</a>
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct" class="pagNum" date-pagNum="${currentPageNum - 1}">&lt;</a>
     </c:if>
 
       <!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
@@ -160,17 +164,17 @@
     		</c:when>
     		
     		<c:otherwise>
-    			<a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${idx}">${idx}</a>
+    			<a href="${pageContext.request.contextPath}/admin/product/manageProduct" class="pagNum" date-pagNum="${idx}">${idx}</a>
     		</c:otherwise>	    	
     	</c:choose>    	
     </c:forEach>
     
     <c:if test="${currentPageNum < pageMaker.realEnd}">
-       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" class="pagNum" date-pagNum="${currentPageNum + 1}">&gt;</a>
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct" class="pagNum" date-pagNum="${currentPageNum + 1}">&gt;</a>
     </c:if>
       
     <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-       <a href="${pageContext.request.contextPath}/admin/product/manageProduct.do" date-pagNum="${pageMaker.endPage +1}">&#187;</a>
+       <a href="${pageContext.request.contextPath}/admin/product/manageProduct" date-pagNum="${pageMaker.endPage +1}">&#187;</a>
     </c:if>
     
 
