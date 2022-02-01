@@ -116,7 +116,9 @@ public class AdminController {
 	@GetMapping("/product/productDetails/{productId}") // 상품 상세 페이지
 	public ModelAndView productDetails(ModelAndView view, ProductVO productVO) {
 		log.info("productDetails()..");			
-		view.addObject("product", adminService.getProduct(productVO.getProductId()));		
+		view.addObject("product", adminService.getProduct(productVO.getProductId()));
+		view.addObject("isPre", adminService.getPrevoiusProduct(productVO.getProductId()));
+		view.addObject("isNext", adminService.getNextProduct(productVO.getProductId()));
 		view.setViewName("admin/product/productDetails");
 		return view;
 	}
@@ -125,7 +127,7 @@ public class AdminController {
 	public ModelAndView addProduct(ModelAndView view, ProductVO productVO) {
 		log.info("addProduct()..");			
 		adminService.addProduct(productVO);
-		view.setViewName("redirect:/admin/product/manageProduct");
+		view.setViewName("redirect:/admin/product/manageProduct/1");
 		return view;
 	}
 	
@@ -141,7 +143,8 @@ public class AdminController {
 	public ModelAndView modify(ModelAndView view, ProductVO productVO) {
 		log.info("modifyProduct()..");			
 		adminService.modifyProduct(productVO);	
-		view.setViewName("redirect:/admin/product/manageProduct");
+		String URL = "redirect:/admin/product/productDetails/" + productVO.getProductId();
+		view.setViewName(URL);
 		return view;
 	}
 		

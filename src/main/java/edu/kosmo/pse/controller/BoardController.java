@@ -33,11 +33,22 @@ public class BoardController {
 	@Inject
 	private BoardService boardService;
 	
-	@GetMapping("/notice") // 공지사항 계시판
-	public ModelAndView getNoticeBoardList(ModelAndView view, Principal principal) {
+	@GetMapping("/notice/{pageNum}") // 공지사항 계시판
+	public ModelAndView getNoticeBoardList(ModelAndView view, PageVO pageVO, Principal principal) {
 		log.info("getNoticeBoardList..");	
-		view.addObject("boardList", boardService.getNoticeBoardList());
-		view.addObject("userId", principal.getName());
+		int total = boardService.getNoticeBoardCount();
+		int pageNum = pageVO.getPageNum();
+		log.info("pageNum: " + pageVO.getPageNum());
+		
+		if(principal != null) {
+			String userId = principal.getName();
+			view.addObject("userId", userId);
+		}
+		
+		view.addObject("currentPageNum", pageNum);		
+		view.addObject("boardList", boardService.getNoticeBoardList(pageNum));
+		pageVO = new PageVO(total, pageNum);
+		view.addObject("pageMaker", pageVO);
 		view.setViewName("main/board/notice");
 		return view;
 	}

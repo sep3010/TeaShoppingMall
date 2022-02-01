@@ -13,10 +13,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <title>공지사항</title>
     <script type="text/javascript">
-		
+ 	// csrf
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
 	
     </script>
 </head>
@@ -31,7 +37,7 @@
 	<sec:authorize access="isAuthenticated()">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<p>${userId} 관리자님 환영합니다.</p>
-			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
+			<p><a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_USER')">
 			<p>${userId}님 환영합니다.</p>
@@ -83,9 +89,9 @@
 	          BOARD
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice">Notice</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A">Q&A</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review">Review</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice/${1}">Notice</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A/${1}">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review/${1}">Review</a>
 	        </div>
 	      </li>
 	    </ul>
@@ -107,19 +113,60 @@
 			<td>작성일</td>
 			<td>조회수</td>
 		</tr>
-		<c:forEach var="board" items="${boardList}" varStatus="status">
+		<c:forEach var="board" items="${boardList}">
 			<tr>
-				<td>${status.count}</td>
+				<td>${board.rnum}</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/main/board/notice/${board.boardId}">${board.boardTitle}</a>
+					<a href="${pageContext.request.contextPath}/main/board/noticeDetails/${board.boardId}">${board.boardTitle}</a>
 				</td>
-				<td>${board.userId}</td>
+				<td>관리자</td>
 				<td>${board.writeDate}</td>
 				<td>${board.boardHit}</td>
 			</tr>	
 		</c:forEach>
+		
+		<sec:authorize access="isAuthenticated()">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<tr>
+					<td>
+						<a href="${pageContext.request.contextPath}/main/board/notice/writeNotice">글작성</a>
+					</td>
+				</tr>
+			</sec:authorize>		
+		</sec:authorize>
 
 	</table>
+	
+	<!-- 페이징 바 -->
+
+	<c:if test="${pageMaker.pre}"> 
+       <a href="${pageContext.request.contextPath}/main/board/notice/${pageMaker.startPage - 1}">&#171;</a>
+    </c:if>
+    
+    <c:if test="${currentPageNum > 1}">
+       <a href="${pageContext.request.contextPath}/main/board/notice/${currentPageNum - 1}">&lt;</a>
+    </c:if>
+
+      <!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
+    <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" >
+    	<c:choose>
+    		<c:when test="${idx eq currentPageNum}">
+    			<span>${idx}</span>
+    		</c:when>
+    		
+    		<c:otherwise>
+    			<a href="${pageContext.request.contextPath}/main/board/notice/${idx}">${idx}</a>
+    		</c:otherwise>	    	
+    	</c:choose>    	
+    </c:forEach>
+    
+    <c:if test="${currentPageNum < pageMaker.realEnd}">
+       <a href="${pageContext.request.contextPath}/main/board/notice/${currentPageNum + 1}">&gt;</a>
+    </c:if>
+      
+    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+       <a href="${pageContext.request.contextPath}/main/board/notice/${pageMaker.endPage +1}">&#187;</a>
+    </c:if>
 
 
 </body>

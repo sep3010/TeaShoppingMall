@@ -52,6 +52,32 @@ public class AdminService {
 		return adminMapper.getProduct(productId);
 	}
 	
+	// 이전 상품 여부 조회
+	public boolean getPrevoiusProduct(int productId) {
+		log.info("getPrevoiusProduct()...");
+		int preProductId = productId - 1;
+		boolean isPre = false;
+		
+		if(adminMapper.getProduct(preProductId) != null) {
+			isPre = true;
+		}
+		
+		return isPre;
+	}
+	
+	// 다음 상품 여부 조회
+	public boolean getNextProduct(int productId) {
+		log.info("getNextProduct()...");
+		int nextProductId = productId + 1;
+		boolean isNext = false;
+		
+		if(adminMapper.getProduct(nextProductId) != null) {
+			isNext = true;
+		}
+		
+		return isNext;
+	}
+	
 	// 상품 등록
 	@Transactional(rollbackFor = Exception.class)	
 	public void addProduct(ProductVO productVO) {

@@ -88,7 +88,7 @@ $(document).ready(function () {
 	<sec:authorize access="isAuthenticated()">
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<p>${userId} 관리자님 환영합니다.</p>
-			<a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
+			<p><a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
 		</sec:authorize>
 		<sec:authorize access="hasRole('ROLE_USER')">
 			<p>${userId}님 환영합니다.</p>
@@ -140,9 +140,9 @@ $(document).ready(function () {
 	          BOARD
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice">Notice</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A">Q&A</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review">Review</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice/${1}">Notice</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A/${1}">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review/${1}">Review</a>
 	        </div>
 	      </li>
 	    </ul>

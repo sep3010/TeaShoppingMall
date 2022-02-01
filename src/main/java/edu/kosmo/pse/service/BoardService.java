@@ -24,24 +24,41 @@ public class BoardService {
 	private BoardMapper boardMapper;
 	
 	// notice(공지사항) 게시판 글 목록 불러오기
-	public List<BoardVO> getNoticeBoardList() {
+	public List<BoardVO> getNoticeBoardList(int pageNum) {
 		log.info("getNoticeBoardList()...");
-		return boardMapper.getNoticeBoardList();		
+		return boardMapper.getNoticeBoardList(pageNum);		
+	}
+	
+	// 공시사항 글 전체 개수
+	public int getNoticeBoardCount() {
+		log.info("getNoticeBoardCount()...");
+		return boardMapper.getNoticeBoardCount();		
 	}
 	
 	// Q&A 게시판 글 목록 불러오기
-	public List<BoardVO> getQandABoardList() {
+	public List<BoardVO> getQandABoardList(int pageNum) {
 		log.info("getQandABoardList()...");
-		return boardMapper.getQandABoardList();		
+		return boardMapper.getQandABoardList(pageNum);		
 	}
+	
+	// Q&A 글 전체 개수
+	public int getQandABoardCount() {
+		log.info("getQandABoardCount()...");
+		return boardMapper.getQandABoardCount();		
+	}
+
 	
 	// review(후기) 게시판 글 목록 불러오기
-	public List<BoardVO> getReviewBoardList() {
+	public List<BoardVO> getReviewBoardList(int pageNum) {
 		log.info("getReviewBoardList()...");
-		return boardMapper.getReviewBoardList();		
+		return boardMapper.getReviewBoardList(pageNum);		
 	}
 	
-	
+	// review 글 전체 개수
+	public int getReviewBoardCount() {
+		log.info("getReviewBoardCount()...");
+		return boardMapper.getReviewBoardCount();		
+	}
 	
 
 	
