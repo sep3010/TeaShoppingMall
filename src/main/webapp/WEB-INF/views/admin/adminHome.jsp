@@ -22,7 +22,7 @@
 	<h1>관리자 페이지 입니다.</h1>
 	
 	<h3><a href="<c:url value="/" />">메인 홈</a></h3>
-	<h3><a href="<c:url value="/admin/product/manageProduct" />">상품 관리</a></h3>
+	<h3><a href="<c:url value="/admin/product/manageProduct/${1}" />">상품 관리</a></h3>
 	<h3><a href="<c:url value="/admin/member/manageMember" />">회원 관리</a></h3>
 	<h3><a href="<c:url value="/admin/order/manageOrder" />">주문 관리</a></h3>
 	<h3><a href="<c:url value="/admin/board/manageboard" />">게시판 관리</a></h3>
