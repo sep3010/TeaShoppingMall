@@ -13,8 +13,12 @@
   		<!-- 회원가입페이지 -->
         <intercept-url pattern="/add/**" access="permitAll" />
         
-        <!-- 홈페이지 메인(상품 카테고리 메뉴, 게시판) -->
-        <intercept-url pattern="/main/**" access="permitAll" />
+        <!-- 게시판 중 관리자 기능 -->
+        <intercept-url pattern="/main/board/noticeModify" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/main/board/noticeWrite" access="hasRole('ROLE_ADMIN')" />
+        
+        <!-- 게시판 중 회원과 관리자 기능 -->
+        <intercept-url pattern="/main/board/questionWrite" access="hasAnyRole('ROLE_USER, ROLE_ADMIN')" />
         
         <!-- 홈 화면 -->
         <intercept-url pattern="/" access="permitAll" />

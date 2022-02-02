@@ -34,7 +34,7 @@
 		       
 		       console.log($(this).attr("href"));
 		       
-		       let deleteCheck = confirm("등록된 상품을 삭제 하시겠습니까?");
+		       const deleteCheck = confirm("등록된 상품을 삭제 하시겠습니까?");
 		       
 		       if(deleteCheck == true){
 		       
@@ -59,7 +59,30 @@
 		       }
 		    
 		    }); // $(".delete").click
-		    
+		   
+		   /*
+		   $(".next").click( function (event) { 
+			   event.preventDefault();
+			   
+		   	   $.ajax({
+		              type : "POST",
+		              url : $(this).attr("href"),
+		              cache : false,
+		              contentType:'application/json; charset="UTF-8"',
+		              data : JSON.stringify(data),
+		              success: function () { 
+		            	 console.log("ajax 통신 성공");
+
+		              	 location.assign("${pageContext.request.contextPath}/user/cart");
+		             
+		              },
+		              error: function (e) {
+		                  console.log(e);
+		              }         
+		          
+		        }); 
+		    }
+		   */
 			
 		    
 		 
@@ -122,11 +145,11 @@
 		<tr>
 			<td colspan="2">
 				<c:if test="${isNext}">
-					<a href="${pageContext.request.contextPath}/admin/product/productDetails/${product.productId + 1}">◀ 다음 상품</a>&nbsp;&nbsp;
+					<a class="next" href="${pageContext.request.contextPath}/admin/product/productDetails/next/${product.productId}">◀ 다음 상품</a>&nbsp;&nbsp;
 				</c:if>
 				
 				<c:if test="${isPre}">
-					<a href="${pageContext.request.contextPath}/admin/product/productDetails/${product.productId - 1}">이전 상품 ▶</a>
+					<a href="${pageContext.request.contextPath}/admin/product/productDetails/pre/${product.productId}">이전 상품 ▶</a>
 				</c:if>				
 			</td>
 		</tr>

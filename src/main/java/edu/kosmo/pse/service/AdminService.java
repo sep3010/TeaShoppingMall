@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.kosmo.pse.mapper.AdminMapper;
 import edu.kosmo.pse.mapper.MemberMapper;
 import edu.kosmo.pse.page.Criteria;
+import edu.kosmo.pse.vo.BoardVO;
 import edu.kosmo.pse.vo.MemberVO;
 import edu.kosmo.pse.vo.ProductImageVO;
 import edu.kosmo.pse.vo.ProductVO;
@@ -53,12 +54,11 @@ public class AdminService {
 	}
 	
 	// 이전 상품 여부 조회
-	public boolean getPrevoiusProduct(int productId) {
-		log.info("getPrevoiusProduct()...");
-		int preProductId = productId - 1;
+	public boolean existPrevoiusProduct(int productId) {
+		log.info("existPrevoiusProduct()...");
 		boolean isPre = false;
 		
-		if(adminMapper.getProduct(preProductId) != null) {
+		if(adminMapper.getProduct(productId) != null) {
 			isPre = true;
 		}
 		
@@ -66,16 +66,21 @@ public class AdminService {
 	}
 	
 	// 다음 상품 여부 조회
-	public boolean getNextProduct(int productId) {
-		log.info("getNextProduct()...");
-		int nextProductId = productId + 1;
+	public boolean existNextProduct(int productId) {
+		log.info("existNextProduct()...");
 		boolean isNext = false;
 		
-		if(adminMapper.getProduct(nextProductId) != null) {
+		if(adminMapper.getNextProduct(productId) != null) {
 			isNext = true;
 		}
 		
 		return isNext;
+	}
+	
+	// 다음 상품 조회
+	public ProductVO getNextProduct(int productId) {
+		log.info("getNextProduct()...");	
+		return adminMapper.getNextProduct(productId);
 	}
 	
 	// 상품 등록

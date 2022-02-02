@@ -41,11 +41,11 @@
         LEFT JOIN order_detail o ON b.order_id = o.order_id 
         WHERE b.board_type_id = 1 ORDER BY b.board_id ASC  
 	             ) A WHERE ROWNUM <= #{pageNum} * 10
-	         ) WHERE rnum > #{pageNum} * 10 ORDER BY rnum DESC
+	         ) WHERE rnum > (#{pageNum} - 1) * 10 ORDER BY rnum DESC
 	    ]]> 
 	</select>
 	
-	<select id="getQandABoardList" resultMap="boardMap">
+	<select id="getQuestionBoardList" resultMap="boardMap">
 		<![CDATA[
 			SELECT * FROM (
 	              SELECT ROWNUM AS rnum, A.* FROM (
@@ -58,7 +58,7 @@
         LEFT JOIN order_detail o ON b.order_id = o.order_id 
         WHERE b.board_type_id = 2 ORDER BY b.board_id ASC  
 	             ) A WHERE ROWNUM <= #{pageNum} * 10
-	         ) WHERE rnum > #{pageNum} * 10 ORDER BY rnum DESC
+	         ) WHERE rnum > (#{pageNum} - 1) * 10 ORDER BY rnum DESC
 	    ]]> 
 	</select>
 	
@@ -75,10 +75,41 @@
         LEFT JOIN order_detail o ON b.order_id = o.order_id 
         WHERE b.board_type_id = 3 ORDER BY b.board_id ASC  
 	             ) A WHERE ROWNUM <= #{pageNum} * 10
-	         ) WHERE rnum > #{pageNum} * 10 ORDER BY rnum DESC
+	         ) WHERE rnum > (#{pageNum} - 1) * 10 ORDER BY rnum DESC
 	    ]]> 
 	</select>
-
+	
+	<select id="getBoard" resultMap="boardMap">
+		SELECT ROWNUM AS rnum, b.board_id, b.board_title, 
+		b.board_content, b.user_id, b.write_date, b.board_hit, 
+		b.board_group, b.rewrite_date, b.board_type_id, b.board_lock, 
+		o.product_id, b.star_rating, o.order_id, b.board_category, 
+		t.board_type_name FROM board b 
+		LEFT JOIN board_type t 
+		ON b.board_id = t.board_type_id 
+		LEFT JOIN order_detail o 
+		ON b.order_id = o.order_id  
+		WHERE b.board_id = #{boardId}
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO board VALUES (BOARD_SEQ.nextval, 
+		#{boardTitle}, #{boardContent}, #{userId}, SYSDATE, 0, 
+		BOARD_SEQ.CURRVAL, null, #{boardTypeId}, #{boardLock}, 
+		#{productId}, #{starRating}, #{orderId}, #{boardCategory})
+	</insert>
+	
+	<update id="updateNotice">
+		UPDATE board SET board_title = #{boardTitle}, board_content = #{boardContent}, 
+		rewrite_date = SYSDATE WHERE board_id = #{boardId}
+	</update>
+	
+	<update id="updateQuestion">
+		UPDATE board SET board_title = #{boardTitle}, board_content = #{boardContent}, 
+		rewrite_date = SYSDATE, board_lock = #{boardLock}, boardCategory = #{board_category} 
+		WHERE board_id = #{boardId}
+	</update>
+	
 
 
 </mapper>	

@@ -60,7 +60,6 @@
 	    ]]>     
 	</select>
 	
-	
 	<select id="getProduct" resultMap="productMap">
 		SELECT p.product_id, p.product_name, p.category_id, p.brand,
 		p.weight, p.count, p.product_price, p.update_date, p.cell_count,
@@ -80,6 +79,17 @@
 		brand = #{brand}, weight = #{weight}, count = #{count}, product_price = #{productPrice}, 
 		stock = #{stock} WHERE product_id = #{productId}
 	</update>
+	
+	<select id="getNextProduct" resultMap="productMap">
+		<![CDATA[
+			SELECT p.product_id, p.product_name, p.category_id, p.brand,
+			p.weight, p.count, p.product_price, p.update_date, p.cell_count,
+			p.stock, c.category_name FROM product p 
+			LEFT JOIN product_category c ON p.category_id = c.category_id
+			WHERE p.product_id > #{productId} ORDER BY p.product_id ASC
+		]]>
+	</select>
+	
 	
 	<!-- 
 	<insert id="insertProductImg">

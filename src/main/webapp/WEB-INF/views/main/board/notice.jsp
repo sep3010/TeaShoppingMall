@@ -19,15 +19,59 @@
 
     <title>공지사항</title>
     <script type="text/javascript">
- 	// csrf
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
+	 	// csrf
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
+	    
+	    //Ajax spring security header
+		$(document).ajaxSend(function(e, xhr, options){
+			xhr.setRequestHeader(header, token);
+		});
+    
+		$(document).ready(function () {
+		    $(".delete").click( function (event) {
+		       event.preventDefault();
+		       
+		       let trObj = $(this).parent().parent();
+		       
+		       console.log($(this).attr("href"));
+		       
+		       const deleteCheck = confirm("글을 삭제 하시겠습니까?");
+		       
+		       if(deleteCheck == true){
+		       
+			       $.ajax({	
+			           type : "DELETE", 
+			           url : $(this).attr("href"),
+			           success: function (result) {       
+			           console.log(result); 
+			             if(result == "SUCCESS"){
+			                   $(trObj).remove();  	                             
+			                }                       
+			              },
+			              error: (e) => {
+			                  console.log(e);
+			              }         
+			       
+			       });  
+		       
+		       }
+		       else{
+		    	   console.log("삭제 취소");
+		       }
+		    
+		    }); // $(".delete").click
+		    
+		   
+		 
+		});
     
 	
     </script>
 </head>
 
-<body>    <!-- 로그인 되지 않았다면 참 -->
+<body>    
+	<!-- 로그인 되지 않았다면 참 -->
 	<sec:authorize access="isAnonymous()">
 		<p>
 			<a href="<c:url value="/login/loginForm" />">로그인</a>
@@ -90,8 +134,8 @@
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice/${1}">Notice</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A/${1}">Q&A</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review/${1}">Review</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/question/${1}">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/review/${1}">Review</a>
 	        </div>
 	      </li>
 	    </ul>
@@ -112,24 +156,36 @@
 			<td>작성자</td>
 			<td>작성일</td>
 			<td>조회수</td>
+			<sec:authorize access="isAuthenticated()">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">					
+					<td>삭제</td>					
+				</sec:authorize>		
+			</sec:authorize>
 		</tr>
 		<c:forEach var="board" items="${boardList}">
 			<tr>
 				<td>${board.rnum}</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/main/board/noticeDetails/${board.boardId}">${board.boardTitle}</a>
+					<a href="${pageContext.request.contextPath}/main/board/noticeContent/${board.boardId}">${board.boardTitle}</a>
 				</td>
 				<td>관리자</td>
 				<td>${board.writeDate}</td>
 				<td>${board.boardHit}</td>
+				<sec:authorize access="isAuthenticated()">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<td>
+							<a class="delete" href="${pageContext.request.contextPath}/main/board/${board.boardId}">삭제</a>
+						</td>
+					</sec:authorize>		
+				</sec:authorize>
 			</tr>	
 		</c:forEach>
 		
 		<sec:authorize access="isAuthenticated()">
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<tr>
-					<td>
-						<a href="${pageContext.request.contextPath}/main/board/notice/writeNotice">글작성</a>
+					<td colspan="5">
+						<a href="${pageContext.request.contextPath}/main/board/noticeWrite">글쓰기</a>
 					</td>
 				</tr>
 			</sec:authorize>		

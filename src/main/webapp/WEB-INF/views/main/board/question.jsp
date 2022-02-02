@@ -13,12 +13,65 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
-    <title>상품 상세</title>
-		
+    <title>Q&A</title>
+    <script type="text/javascript">
+	 	// csrf
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
+	    
+	    //Ajax spring security header
+		$(document).ajaxSend(function(e, xhr, options){
+			xhr.setRequestHeader(header, token);
+		});
+    
+		$(document).ready(function () {
+		    $(".delete").click( function (event) {
+		       event.preventDefault();
+		       
+		       let trObj = $(this).parent().parent();
+		       
+		       console.log($(this).attr("href"));
+		       
+		       const deleteCheck = confirm("글을 삭제 하시겠습니까?");
+		       
+		       if(deleteCheck == true){
+		       
+			       $.ajax({	
+			           type : "DELETE", 
+			           url : $(this).attr("href"),
+			           success: function (result) {       
+			           console.log(result); 
+			             if(result == "SUCCESS"){
+			                   $(trObj).remove();  	                             
+			                }                       
+			              },
+			              error: (e) => {
+			                  console.log(e);
+			              }         
+			       
+			       });  
+		       
+		       }
+		       else{
+		    	   console.log("삭제 취소");
+		       }
+		    
+		    }); // $(".delete").click
+		    
+		   
+		 
+		});
+    
+	
+    </script>
 </head>
 
-<body>    <!-- 로그인 되지 않았다면 참 -->
+<body>    
+	<!-- 로그인 되지 않았다면 참 -->
 	<sec:authorize access="isAnonymous()">
 		<p>
 			<a href="<c:url value="/login/loginForm" />">로그인</a>
@@ -92,58 +145,125 @@
 	    </form>
 	  </div>
 	</nav>
-	
+
+
+
+<h1>Q&A</h1>
 	<table width="700" border="1">
 		<tr>
-			<td>상품번호</td>
-			<td>${product.productId}</td>
+			<td>번호</td>
+			<td>분류</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>
+				<c:choose>
+					<c:when test="${!empty board.rewriteDate}">
+						수정일						
+					</c:when>
+					<c:otherwise>
+						작성일						
+					</c:otherwise>					
+				</c:choose>				
+			</td>
+			<td>조회수</td>
+			<sec:authorize access="isAuthenticated()">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">					
+					<td>삭제</td>					
+				</sec:authorize>		
+			</sec:authorize>
 		</tr>
-		<tr>
-			<td>상품명</td>
-			<td>${product.productName}</td>
-		</tr>
-		<tr>	
-			<td>상품 분류</td>
-			<td>${product.categoryName}</td>
-		</tr>
-		<tr>
-			<td>브랜드명</td>
-			<td>${product.brand}</td>
-		</tr>
-		<tr>
-			<td>내용량(무게/개수)</td>
-			<c:if test="${product.weight != 0 && product.count == 0}">
-				<td>${product.weight}g</td>
-			</c:if>
-			<c:if test="${product.count != 0 && product.weight == 0}">
-				<td>${product.count}개입</td>
-			</c:if>
-			<c:if test="${product.count == 0 && product.weight == 0}">
-				<td>입력값 없음</td>
-			</c:if>
-			<c:if test="${product.count != 0 && product.weight != 0}">
-				<td>${product.weight}g * ${product.count}개</td>
-			</c:if>
-		<tr>
-			<td>판매가</td>
-			<td>${product.productPrice}원</td>
-		</tr>
-		<tr>
-			<td>등록일자</td>
-			<td>${product.updateDate}</td>
-		</tr>
-		<tr>
-			<td>판매량</td>
-			<td>${product.cellCount}개</td>
-		</tr>
-		<tr>
-			<td>재고량</td>
-			<td>${product.stock}개</td>
-		</tr>
+		<c:forEach var="board" items="${boardList}">
+			<tr>
+				<td>${board.rnum}</td>
+				<td>${board.boardCategory}</td>
+				<td>
+					<c:if test="${board.boardLock eq 'Y'}"> <%-- 비공개글 일때 --%>
+						<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
+							<i class="fas fa-lock"></i>${board.boardTitle}
+						</sec:authorize>
+						<sec:authorize access="isAuthenticated()"> <%-- 로그인 했을 때 --%>							
+							<c:if test="${userId eq board.userId}">
+								<a href="${pageContext.request.contextPath}/main/board/questionContent/${board.boardId}">${board.boardTitle}</a>
+							</c:if>
+							<c:if test="${userId ne board.userId}">
+								<sec:authorize access="hasRole('ROLE_ADMIN')">
+									<a href="${pageContext.request.contextPath}/main/board/questionContent/${board.boardId}">${board.boardTitle}</a>
+								</sec:authorize>
+								<sec:authorize access="hasRole('ROLE_USER')">
+									<i class="fas fa-lock"></i>${board.boardTitle}
+								</sec:authorize>
+							</c:if>						
+						</sec:authorize>					
+					</c:if>
+					<c:if test="${board.boardLock eq 'N'}"> <%-- 공개글 일때 --%>
+						<a href="${pageContext.request.contextPath}/main/board/questionContent/${board.boardId}">${board.boardTitle}</a>
+					</c:if>
+				</td>				
+				<td>${board.userId}</td>
+				<td>
+					<c:choose>
+						<c:when test="${!empty board.rewriteDate}">
+							${board.rewriteDate}						
+						</c:when>
+						<c:otherwise>
+							${board.writeDate}						
+						</c:otherwise>					
+					</c:choose>				
+				</td>
+				<td>${board.boardHit}</td>
+				<sec:authorize access="isAuthenticated()">
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<td>
+							<a class="delete" href="${pageContext.request.contextPath}/main/board/${board.boardId}">삭제</a>
+						</td>
+					</sec:authorize>		
+				</sec:authorize>
+			</tr>	
+		</c:forEach>
+		
+		<sec:authorize access="isAuthenticated()">
+			<sec:authorize access="hasAnyRole('ROLE_USER, ROLE_ADMIN')">
+				<tr>
+					<td colspan="6">
+						<a href="${pageContext.request.contextPath}/main/board/questionWrite">글쓰기</a>
+					</td>
+				</tr>
+			</sec:authorize>		
+		</sec:authorize>
 
 	</table>
-<h3>[<a href="<c:url value="/admin/product/modifyProduct/${product.productId}" />">수정하기</a>]</h3>
-<h3>[<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]</h3>
-<h3>[<a href="<c:url value="/admin/product/manageProduct" />">상품 목록</a>]</h3>
+	
+	<!-- 페이징 바 -->
+
+	<c:if test="${pageMaker.pre}"> 
+       <a href="${pageContext.request.contextPath}/main/board/notice/${pageMaker.startPage - 1}">&#171;</a>
+    </c:if>
+    
+    <c:if test="${currentPageNum > 1}">
+       <a href="${pageContext.request.contextPath}/main/board/notice/${currentPageNum - 1}">&lt;</a>
+    </c:if>
+
+      <!-- 링크를 걸어준다 1-10페이지까지 페이지를 만들어주는것  -->
+    <c:forEach var="idx" begin="${pageMaker.startPage}" end="${pageMaker.endPage}" >
+    	<c:choose>
+    		<c:when test="${idx eq currentPageNum}">
+    			<span>${idx}</span>
+    		</c:when>
+    		
+    		<c:otherwise>
+    			<a href="${pageContext.request.contextPath}/main/board/notice/${idx}">${idx}</a>
+    		</c:otherwise>	    	
+    	</c:choose>    	
+    </c:forEach>
+    
+    <c:if test="${currentPageNum < pageMaker.realEnd}">
+       <a href="${pageContext.request.contextPath}/main/board/notice/${currentPageNum + 1}">&gt;</a>
+    </c:if>
+      
+    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+       <a href="${pageContext.request.contextPath}/main/board/notice/${pageMaker.endPage +1}">&#187;</a>
+    </c:if>
+
+
 </body>
 </html>

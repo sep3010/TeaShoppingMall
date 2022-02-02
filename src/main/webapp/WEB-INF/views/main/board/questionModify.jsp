@@ -7,18 +7,85 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<!-- csrf meta tag -->
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
-    <title>상품 상세</title>
+    <title>Q&A</title>
+	<script type="text/javascript">
+		// csrf
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
+	    
+	  	//Ajax spring security header..
+		$(document).ajaxSend(function(e, xhr, options){
+			xhr.setRequestHeader(header, token);
+		});
+	  	
+		$(document).ready(function () {
+			const boardCategory = '${board.boardCategory}';
+			const boardLock = '${board.boardLock}';
+			
+			if($("#boardCategory").val("상품") === boardCategory){
+				$("#boardCategory").val("상품").prop("selected", true);
+			}
+			else if($("#boardCategory").val("주문/결제") === boardCategory){
+				$("#boardCategory").val("주문/결제").prop("selected", true);
+			}
+			else if($("#boardCategory").val("배송") === boardCategory){
+				$("#boardCategory").val("배송").prop("selected", true);
+			}
+			else if($("#boardCategory").val("반품/교환") === boardCategory){
+				$("#boardCategory").val("반품/교환").prop("selected", true);
+			}
+			else{
+				$("#boardCategory").val("기타").prop("selected", true);
+			}
+			
+			
+			if( boardLock === 'N'){
+				$("#boardLock").prop('checked', false);
+			}
+			 
+			
+			$("#questionForm").submit(function(event){
+				 
+				 
+				 if($("#boardCategory").val() === ""){
+					 event.preventDefault();
+					 alert("분류를 선택해주세요.");
+				 }
+				 if($("#title").val() === ""){
+					 event.preventDefault();
+					 alert("제목을 입력해주세요.");
+				 }
+				 if($("#content").val() === ""){
+					 event.preventDefault();
+					 alert("내용을 입력해주세요.");
+				 }
+				 if($("#boardLock").is(":checked") == false){
+					 $("#questionForm").prepend('<input type="hidden" name="boardLock" value="N"/>');
+					 
+				 }
+
+				 
+			 });
+		 
+		});	
+		
+	
+	</script>
 		
 </head>
 
-<body>    <!-- 로그인 되지 않았다면 참 -->
+<body> 
+	<!-- 로그인 되지 않았다면 참 -->
 	<sec:authorize access="isAnonymous()">
 		<p>
 			<a href="<c:url value="/login/loginForm" />">로그인</a>
@@ -91,59 +158,44 @@
 	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 	    </form>
 	  </div>
-	</nav>
-	
-	<table width="700" border="1">
-		<tr>
-			<td>상품번호</td>
-			<td>${product.productId}</td>
-		</tr>
-		<tr>
-			<td>상품명</td>
-			<td>${product.productName}</td>
-		</tr>
-		<tr>	
-			<td>상품 분류</td>
-			<td>${product.categoryName}</td>
-		</tr>
-		<tr>
-			<td>브랜드명</td>
-			<td>${product.brand}</td>
-		</tr>
-		<tr>
-			<td>내용량(무게/개수)</td>
-			<c:if test="${product.weight != 0 && product.count == 0}">
-				<td>${product.weight}g</td>
-			</c:if>
-			<c:if test="${product.count != 0 && product.weight == 0}">
-				<td>${product.count}개입</td>
-			</c:if>
-			<c:if test="${product.count == 0 && product.weight == 0}">
-				<td>입력값 없음</td>
-			</c:if>
-			<c:if test="${product.count != 0 && product.weight != 0}">
-				<td>${product.weight}g * ${product.count}개</td>
-			</c:if>
-		<tr>
-			<td>판매가</td>
-			<td>${product.productPrice}원</td>
-		</tr>
-		<tr>
-			<td>등록일자</td>
-			<td>${product.updateDate}</td>
-		</tr>
-		<tr>
-			<td>판매량</td>
-			<td>${product.cellCount}개</td>
-		</tr>
-		<tr>
-			<td>재고량</td>
-			<td>${product.stock}개</td>
-		</tr>
+	</nav>   
 
-	</table>
-<h3>[<a href="<c:url value="/admin/product/modifyProduct/${product.productId}" />">수정하기</a>]</h3>
-<h3>[<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]</h3>
-<h3>[<a href="<c:url value="/admin/product/manageProduct" />">상품 목록</a>]</h3>
+<h1>Q&A</h1>
+	<form:form id="Modify" action="${pageContext.request.contextPath}/main/board/question/modify" method="POST">
+		<input type="hidden" name="boardId" value="${boardId}"/>
+		<table id="table" width="700" border="1">
+			<tr>
+				<td>분류</td>
+				<td>
+					<select id="boardCategory" name="boardCategory">
+						<option value="">분류를 선택해주세요.</option>
+						<option value="상품">상품</option>
+						<option value="주문/결제">주문/결제</option>
+						<option value="배송">배송</option>
+						<option value="반품/교환">반품/교환</option>
+						<option value="기타">기타</option>
+					</select>				
+				</td>
+			</tr>
+			<tr>
+				<td>제목</td>
+				<td><input id="title" type="text" name="boardTitle" value="${board.boardTitle}"/></td>
+			</tr>
+			<tr>	
+				<td>내용</td>
+				<td><textarea id="content" name="boardContent" rows="10">${board.boardContent}</textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input id="boardLock" type="checkbox" name="boardLock" value="Y" checked="checked">비공개 글로 설정하기
+				</td>
+			</tr>			
+		</table>
+		<button type="submit" class="btn">공지사항 등록</button>
+	</form:form>
+
+		
+<a href="${pageContext.request.contextPath}/main/board/question/${1}">목록</a>
+
 </body>
 </html>

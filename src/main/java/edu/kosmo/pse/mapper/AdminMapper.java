@@ -41,6 +41,9 @@ public interface AdminMapper {
 	
 	// 상품 수정
 	public void updateProduct(ProductVO productVO);
+
+	// 다음 상품 조회
+	public ProductVO getNextProduct(int productId);
 	
 	
 }

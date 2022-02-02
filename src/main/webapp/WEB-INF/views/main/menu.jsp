@@ -55,7 +55,7 @@ $(document).ready(function () {
                },
               success: function () { 
             	 console.log("ajax 통신 성공");
-            	 let moveCart = confirm("상품을 카트에 담았습니다. 장바구니로 이동하시겠습니까?");            	 
+            	 const moveCart = confirm("상품을 카트에 담았습니다. 장바구니로 이동하시겠습니까?");            	 
               	 if(moveCart == false){  
               		console.log("장바구니 이동 안함");            		
               	 }
@@ -141,8 +141,8 @@ $(document).ready(function () {
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice/${1}">Notice</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Q&A/${1}">Q&A</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/Review/${1}">Review</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/question/${1}">Q&A</a>
+	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/review/${1}">Review</a>
 	        </div>
 	      </li>
 	    </ul>

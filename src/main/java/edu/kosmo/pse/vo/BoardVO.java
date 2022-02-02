@@ -1,8 +1,6 @@
 package edu.kosmo.pse.vo;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

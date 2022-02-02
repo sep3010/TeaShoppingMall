@@ -117,9 +117,23 @@ public class AdminController {
 	public ModelAndView productDetails(ModelAndView view, ProductVO productVO) {
 		log.info("productDetails()..");			
 		view.addObject("product", adminService.getProduct(productVO.getProductId()));
-		view.addObject("isPre", adminService.getPrevoiusProduct(productVO.getProductId()));
-		view.addObject("isNext", adminService.getNextProduct(productVO.getProductId()));
+		view.addObject("isPre", adminService.existPrevoiusProduct(productVO.getProductId()));
+		view.addObject("isNext", adminService.existNextProduct(productVO.getProductId()));
 		view.setViewName("admin/product/productDetails");
+		return view;
+	}
+	
+	// 다음 상품 조회
+	@GetMapping("/product/productDetails/next/{productId}") 
+	public ModelAndView getNextProduct(ModelAndView view, ProductVO productVO) {
+		log.info("getNextProduct()..");		
+		int productId = productVO.getProductId(); // 현재 상품 번호
+		log.info("ProductId : " + productId); 
+		productVO = adminService.getNextProduct(productId);
+		productId = productVO.getProductId(); // 다음 상품 번호
+		log.info("nextProductId : " + productId); 
+		String makeURL = "admin/product/productDetails/" + productId;
+		view.setViewName(makeURL);
 		return view;
 	}
 		

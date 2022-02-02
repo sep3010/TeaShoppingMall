@@ -31,7 +31,7 @@
 		       
 		       console.log($(this).attr("href"));
 		       
-		       let deleteCheck = confirm("등록된 상품을 삭제 하시겠습니까?");
+		       const deleteCheck = confirm("등록된 상품을 삭제 하시겠습니까?");
 		       
 		       if(deleteCheck == true){
 		       
@@ -146,10 +146,9 @@
 				<td>${product.updateDate}</td>
 				<td>${product.cellCount}</td>
 				<td>${product.stock}</td>
-				<td><a class="delete" data-productId='${product.productId}'
-					href="${pageContext.request.contextPath}/admin/product/manageProduct/${product.productId}">삭제</a></td>					
+				<td><a class="delete" href="${pageContext.request.contextPath}/admin/product/manageProduct/${product.productId}">삭제</a></td>					
 			</tr>
-		</c:forEach>
+		</c:forEach> 
 		<tr>
 			<td colspan="10"><a href="${pageContext.request.contextPath}/admin/product/addProductForm">상품 등록</a></td>
 		</tr>
