@@ -101,11 +101,10 @@ public class QuestionController {
 	
 	// Q&A 글 수정 등록
 	@PostMapping("/question/modify") 
-	public ModelAndView updatequestionBoard(BoardVO boardVO, ModelAndView view) {
-		log.info("updatequestionBoard()..");
+	public ModelAndView updateQuestionBoard(BoardVO boardVO, ModelAndView view) {
+		log.info("updateQuestionBoard()..");
 		log.info("boardVO : " + boardVO);
 		boardService.updateQuestion(boardVO);
-		
 		String URL = "redirect:/main/board/questionContent/" + boardVO.getBoardId();
 		view.setViewName(URL);		
 		return view;

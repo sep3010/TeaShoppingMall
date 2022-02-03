@@ -170,7 +170,7 @@
 				</td>
 			</tr>			
 		</table>
-		<button type="submit" class="btn">공지사항 등록</button>
+		<button type="submit" class="btn">Q&A 등록</button>
 	</form:form>
 
 		

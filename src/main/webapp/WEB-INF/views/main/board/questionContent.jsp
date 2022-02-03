@@ -58,9 +58,23 @@
 		    	   console.log("삭제 취소");
 		       }
 		    
-		    }); // $(".delete").click
+		    }); // end $(".delete").click
 		    
-			
+		    $("#replyForm").submit(function(event){
+		    	event.preventDefault();
+		    	
+		    	const boardId = '${board.boardId}';
+		    	const boardGroup = '${board.boardGroup}';
+		    	const userId = '${userId}'
+		    	if()
+		    	let replyStep = 0;
+		    	let replyIndent = 0;
+		    	
+		    	
+		    	let replyContent = $("#replyContent").val();
+		    	
+		    	
+		    }); // end $("#replyForm").submit
 		    
 		 
 		});	
@@ -169,6 +183,7 @@
 						<td colspan="6">
 							<a class="delete" href="${pageContext.request.contextPath}/main/board/${board.boardId}">삭제</a>&nbsp;&nbsp;
 							<a href="${pageContext.request.contextPath}/main/board/questionModify/${board.boardId}">수정하기</a>
+							<a href="${pageContext.request.contextPath}/main/board/question/reply">댓글달기</a>
 						</td>					
 					</tr>
 				</c:when>
@@ -179,11 +194,54 @@
 					<td colspan="6">
 						<a class="delete" href="${pageContext.request.contextPath}/main/board/${board.boardId}">삭제</a>&nbsp;&nbsp;
 						<a href="${pageContext.request.contextPath}/main/board/questionModify/${board.boardId}">수정하기</a>
+						<a href="${pageContext.request.contextPath}/main/board/question/reply">댓글달기</a>
 					</td>					
 				</tr>
 			</sec:authorize>	
 		</sec:authorize>		
 	</table>
+	
+	<div id="replyPlace">
+		<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
+			<p>댓글작성 권한이 없습니다. 로그인 해주세요.</p>
+		</sec:authorize>
+		<sec:authorize access="isAuthenticated()"> <%-- 로그인 했을 때 --%>							
+			<c:if test="${userId eq board.userId}">
+				<form:form id="replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">
+					<table>
+						<tr>
+							<td>
+								<textarea id="replyContent" name="replyContent" rows="10" cols="8" placeholder="댓글을 입력해주세요."></textarea>
+							</td>
+							<td>
+								<input type="submit" value="댓글 등록">
+							</td>
+						</tr>
+					</table>			
+				</form:form>
+			</c:if>
+			<c:if test="${userId ne board.userId}">
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<form:form id="replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">
+						<table>
+							<tr>
+								<td>
+									<textarea name="replyContent" rows="10" cols="8" placeholder="댓글을 입력해주세요."></textarea>
+								</td>
+								<td>
+									<input type="submit" value="댓글 등록">
+								</td>
+							</tr>
+						</table>			
+					</form:form>
+				</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_USER')">
+					<p>댓글작성 권한이 없습니다.</p>
+				</sec:authorize>
+			</c:if>						
+		</sec:authorize>					
+	</div>
+	
 		
 <a href="${pageContext.request.contextPath}/main/board/question/${1}">목록</a>
 

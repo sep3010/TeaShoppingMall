@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import edu.kosmo.pse.vo.BoardVO;
+import edu.kosmo.pse.vo.ReplyVO;
 
 
 @Mapper
@@ -70,5 +71,9 @@ public interface BoardMapper {
 			@Param("boardContent") String boardContent,
 			@Param("boardLock") String boardLock,
 			@Param("boardCategory") String boardCategory);
+	
+	// 해당 게시글에 달린 댓글 불러오기
+	@Select("SELECT * FROM reply WHERE board_id = #{boardId} ORDER BY reply_step ASC")
+	public List<ReplyVO> getReplyList(int boardId);
 
 }

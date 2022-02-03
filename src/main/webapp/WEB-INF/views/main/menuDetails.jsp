@@ -93,11 +93,9 @@
 	  </div>
 	</nav>
 	
+	<div>이미지</div>
+	
 	<table width="700" border="1">
-		<tr>
-			<td>상품번호</td>
-			<td>${product.productId}</td>
-		</tr>
 		<tr>
 			<td>상품명</td>
 			<td>${product.productName}</td>
@@ -127,10 +125,6 @@
 		<tr>
 			<td>판매가</td>
 			<td>${product.productPrice}원</td>
-		</tr>
-		<tr>
-			<td>등록일자</td>
-			<td>${product.updateDate}</td>
 		</tr>
 		<tr>
 			<td>판매량</td>

@@ -17,9 +17,34 @@
     <title>상품 상세</title>
 	<script type="text/javascript">
 		$(document).ready( function() {
-	        if(${product.categoryId} == $("select option").val()){
-	            $("option").attr("selected", "selected");
-	        }
+			const categoryId = '${product.categoryId}';		
+
+			if(categoryId == '1'){
+				$("#categoryId option:eq(0)").attr("selected", "selected");
+			}
+			else if(categoryId == '2'){
+				$("#categoryId option:eq(1)").attr("selected", "selected");
+			}
+			else if(categoryId == '3'){
+				$("#categoryId option:eq(2)").attr("selected", "selected");
+			}
+			else if(categoryId == '4'){
+				$("#categoryId option:eq(3)").attr("selected", "selected");
+			}
+			else if(categoryId == '5'){
+				$("#categoryId option:eq(4)").attr("selected", "selected");
+			}
+			else if(categoryId == '6'){
+				$("#categoryId option:eq(5)").attr("selected", "selected");
+			}
+			else if(categoryId == '7'){
+				$("#categoryId option:eq(6)").attr("selected", "selected");
+			}
+			else if(categoryId == '8'){
+				$("#categoryId option:eq(7)").attr("selected", "selected");
+			}
+		
+					
 	    });
 	
 	</script>	
@@ -42,7 +67,7 @@
 		<tr>	
 			<td>상품 분류</td>
 			<td>
-				<select name="categoryId">
+				<select id="categoryId" name="categoryId">
 					<option value="1">BLACK TEA</option>
 					<option value="2">GREEN TEA</option>
 					<option value="3">OOLONG</option>
@@ -73,6 +98,6 @@
 	<button type="submit" class="btn">완료</button>
 </form:form>
 <h3>[<a href="<c:url value="/admin/adminHome" />">관리자 홈</a>]</h3>
-<h3>[<a href="<c:url value="/admin/product/manageProduct" />">상품 목록</a>]</h3>
+<h3>[<a href="<c:url value="/admin/product/manageProduct/${1}" />">상품 목록</a>]</h3>
 </body>
 </html>

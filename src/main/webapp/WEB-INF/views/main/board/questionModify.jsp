@@ -32,52 +32,59 @@
 			const boardCategory = '${board.boardCategory}';
 			const boardLock = '${board.boardLock}';
 			
-			if($("#boardCategory").val("상품") === boardCategory){
-				$("#boardCategory").val("상품").prop("selected", true);
+
+			if('${board.boardCategory}' == '상품'){
+				$("#boardCategory option:eq(1)").attr("selected", "selected");
 			}
-			else if($("#boardCategory").val("주문/결제") === boardCategory){
-				$("#boardCategory").val("주문/결제").prop("selected", true);
+			else if('${board.boardCategory}' == '주문/결제'){
+				$("#boardCategory option:eq(2)").attr("selected", "selected");
 			}
-			else if($("#boardCategory").val("배송") === boardCategory){
-				$("#boardCategory").val("배송").prop("selected", true);
+			else if('${board.boardCategory}' == '배송'){
+				$("#boardCategory option:eq(3)").attr("selected", "selected");
 			}
-			else if($("#boardCategory").val("반품/교환") === boardCategory){
-				$("#boardCategory").val("반품/교환").prop("selected", true);
+			else if('${board.boardCategory}' == '반품/교환'){
+				$("#boardCategory option:eq(4)").attr("selected", "selected");
 			}
-			else{
-				$("#boardCategory").val("기타").prop("selected", true);
+			else if('${board.boardCategory}' == '기타'){
+				$("#boardCategory option:eq(5)").attr("selected", "selected");
 			}
-			
-			
-			if( boardLock === 'N'){
+		
+		
+			if( '${board.boardLock}' == 'N'){				
 				$("#boardLock").prop('checked', false);
+				$("#makeBoardLock").prepend('<input type="hidden" name="boardLock" value="N"/>');				
 			}
-			 
 			
-			$("#questionForm").submit(function(event){
-				 
-				 
-				 if($("#boardCategory").val() === ""){
+			$("#Modify").submit(function(event){
+				if($("#boardCategory").val() === ""){
 					 event.preventDefault();
 					 alert("분류를 선택해주세요.");
 				 }
-				 if($("#title").val() === ""){
+				 else if($("#title").val() === ""){
 					 event.preventDefault();
 					 alert("제목을 입력해주세요.");
 				 }
-				 if($("#content").val() === ""){
+				 else if($("#content").val() === ""){
 					 event.preventDefault();
 					 alert("내용을 입력해주세요.");
 				 }
-				 if($("#boardLock").is(":checked") == false){
-					 $("#questionForm").prepend('<input type="hidden" name="boardLock" value="N"/>');
+				 else if($("#boardLock").is(":checked") == false){
+					 $("#makeBoardLock").empty();
+					 $("#makeBoardLock").prepend('<input type="hidden" name="boardLock" value="N"/>');
 					 
 				 }
+				 else if($("#boardLock").is(":checked") == true){
+					 $("#makeBoardLock").empty();					 
+				 }
+				
+				
+				
+			}); // end $("#Modify").submit
+			
+			
 
-				 
-			 });
 		 
-		});	
+		});	// end $(document).ready
 		
 	
 	</script>
@@ -162,7 +169,8 @@
 
 <h1>Q&A</h1>
 	<form:form id="Modify" action="${pageContext.request.contextPath}/main/board/question/modify" method="POST">
-		<input type="hidden" name="boardId" value="${boardId}"/>
+		<input type="hidden" name="boardId" value="${board.boardId}"/>
+		<span id="makeBoardLock"></span>
 		<table id="table" width="700" border="1">
 			<tr>
 				<td>분류</td>
@@ -189,9 +197,9 @@
 				<td colspan="2">
 					<input id="boardLock" type="checkbox" name="boardLock" value="Y" checked="checked">비공개 글로 설정하기
 				</td>
-			</tr>			
+			</tr>					
 		</table>
-		<button type="submit" class="btn">공지사항 등록</button>
+		<button type="submit" class="btn">Q&A 수정</button>
 	</form:form>
 
 		

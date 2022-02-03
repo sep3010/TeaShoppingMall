@@ -28,6 +28,17 @@
 		<result property="boardTypeName" column="board_type_name" />
 	</resultMap>
 	
+	<resultMap type="edu.kosmo.pse.vo.ReplyVO" id="replyMap">
+		<result property="replyId" column="reply_id" />
+		<result property="boardGroup" column="board_group" />
+		<result property="replyStep" column="reply_step" />
+		<result property="replyIndent" column="reply_indent" />
+		<result property="boardId" column="board_id" />
+		<result property="userId" column="user_id" />
+		<result property="replyWriteDate" column="reply_write_date" />
+		<result property="replyContent" column="reply_content" />
+	</resultMap>
+	
 	<select id="getNoticeBoardList" resultMap="boardMap">
 		<![CDATA[
 			SELECT * FROM (
@@ -106,7 +117,7 @@
 	
 	<update id="updateQuestion">
 		UPDATE board SET board_title = #{boardTitle}, board_content = #{boardContent}, 
-		rewrite_date = SYSDATE, board_lock = #{boardLock}, boardCategory = #{board_category} 
+		rewrite_date = SYSDATE, board_lock = #{boardLock}, board_category = #{boardCategory} 
 		WHERE board_id = #{boardId}
 	</update>
 	

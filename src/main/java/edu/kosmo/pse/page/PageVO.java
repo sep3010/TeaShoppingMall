@@ -23,7 +23,6 @@ public class PageVO {
 	private int total;
 	private final int AMOUNT = 10;
 	
-	// private Criteria cri;
 
 	public PageVO(int total, int pageNum) {
 		

@@ -21,6 +21,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
+	
     $(".inCart").submit(function() {
     	
        // csrf
@@ -173,12 +174,18 @@ $(document).ready(function () {
 		                    </a>
 		                </h5>
 		                <a href="#" class="btn btn-primary">위시리스트</a>
-	
-		                <form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
-		                	<input type="hidden" class="productId" name="productId" value="${product.productId}">
-		                	<input type="submit" class="submit btn" value="장바구니" >
-		                </form>
-
+		                <c:choose>
+		                	<c:when test="${product.stock > 0}">
+		                		<form class="inCart" action="${pageContext.request.contextPath}/user/cart" method="post" >
+				                	<input type="hidden" class="productId" name="productId" value="${product.productId}">
+				                	<input type="submit" class="submit btn" value="장바구니" >
+				                </form>		                	
+		                	</c:when>
+		                	<c:otherwise>
+		                		<p>품절</p>	
+		                	</c:otherwise>		           		                
+		                </c:choose>
+				
 	                </div>
 	            </div>				
 			</c:forEach>

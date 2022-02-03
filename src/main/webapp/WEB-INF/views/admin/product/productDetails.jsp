@@ -28,7 +28,9 @@
 			xhr.setRequestHeader(header, token);
 		});
 	  	
-		$(document).ready(function () {
+		$(document).ready(function () {			
+			
+			
 		    $(".delete").click( function (event) {
 		       event.preventDefault();
 		       
@@ -142,6 +144,7 @@
 			<td>재고량</td>
 			<td>${product.stock}개</td>
 		</tr>
+		<!-- 
 		<tr>
 			<td colspan="2">
 				<c:if test="${isNext}">
@@ -153,6 +156,7 @@
 				</c:if>				
 			</td>
 		</tr>
+		 -->
 		<tr>
 			<td colspan="2">
 				<a class="delete" href="${pageContext.request.contextPath}/admin/product/manageProduct/${product.productId}">삭제</a>&nbsp;&nbsp;

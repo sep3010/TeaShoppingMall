@@ -117,8 +117,8 @@ public class AdminController {
 	public ModelAndView productDetails(ModelAndView view, ProductVO productVO) {
 		log.info("productDetails()..");			
 		view.addObject("product", adminService.getProduct(productVO.getProductId()));
-		view.addObject("isPre", adminService.existPrevoiusProduct(productVO.getProductId()));
-		view.addObject("isNext", adminService.existNextProduct(productVO.getProductId()));
+		//view.addObject("isPre", adminService.existPrevoiusProduct(productVO.getProductId()));
+		//view.addObject("isNext", adminService.existNextProduct(productVO.getProductId()));
 		view.setViewName("admin/product/productDetails");
 		return view;
 	}

@@ -38,7 +38,7 @@
 		           const boardContent = $("#content").val();
 		           const boardTypeId = 1;
 		           const boardLock = "N";
-		           let userId = ${userId};
+		           let userId = '${userId}';
 		           
 		           console.log("boardTitle : " + boardTitle); 
 		           console.log("boardContent : " + boardContent);
