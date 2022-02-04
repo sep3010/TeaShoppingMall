@@ -28,6 +28,33 @@
 			xhr.setRequestHeader(header, token);
 		});
 	  	
+	  	function maekReply(replyList){
+	  		let reply;
+	  		
+	  		for(var key in replyList){
+	  			
+	  			reply += '<tr><td>replyList[key].userId</td><tr><tr><td>replyList[key].replyContent</td></tr><tr><td>replyList[key].replyWriteDate</td></tr><tr><td><button id="re_reply">답글</button></td></tr>';
+	  			
+	  			if(replyList[key].replyIndent > 0){
+	  				reply += '<tr>';
+	  				for(var i = 1; i <= replyList[key].replyIndent; i++){
+	  					reply += '<td></td>';
+	  					if(i == (replyList[key].replyIndent - 1)){
+	  						reply += '<td>&angrt;</td>';
+	  					}
+	  					if(i == replyList[key].replyIndent){
+	  						reply += '<td>replyList[key].replyContent</td></tr>';
+	  					}
+	  				}
+	  				
+	  			} // end if > 0
+	  			
+	  		} // end for in
+	  		
+	  		$("#replyPlace").prepend(reply);
+	  		
+	  	} // end makeReply()
+	  	
 		$(document).ready(function () {
 		    $(".delete").click( function (event) {
 		       event.preventDefault();
@@ -66,12 +93,41 @@
 		    	const boardId = '${board.boardId}';
 		    	const boardGroup = '${board.boardGroup}';
 		    	const userId = '${userId}'
-		    	if()
-		    	let replyStep = 0;
-		    	let replyIndent = 0;
-		    	
-		    	
+		    	const replyStep = 0;
+		    	const replyIndent = 0;
+		  		    	
 		    	let replyContent = $("#replyContent").val();
+		    	
+		    	let reply = {
+		    		boardGroup: boardGroup,
+		    		replyStep: replyStep,
+		    		replyIndent: replyIndent,
+		    		boardId: boardId,
+		    		userId: userId,
+		    		replyContent: replyContent
+		    	}
+		    	
+		    	console.log("reply : " + JSON.stringify(reply));
+		    	
+		    	$.ajax({
+		    		type : "POST",
+		            url : $(this).attr("action"),
+		            cache : false,
+		            contentType:'application/json; charset=utf-8',
+		            data: JSON.stringify(reply), 
+		            success: function (data) {       
+		               console.log("ajax 통신 성공");
+		               console.log(data);
+		               console.log(data.replyList);
+		               maekReply(data.replyList);
+		               
+		            },
+		            error: function (e) {
+		               console.log("ajax 통신 실패");
+		               console.log(e);
+		            }
+		    		
+		    	});
 		    	
 		    	
 		    }); // end $("#replyForm").submit
@@ -183,7 +239,6 @@
 						<td colspan="6">
 							<a class="delete" href="${pageContext.request.contextPath}/main/board/${board.boardId}">삭제</a>&nbsp;&nbsp;
 							<a href="${pageContext.request.contextPath}/main/board/questionModify/${board.boardId}">수정하기</a>
-							<a href="${pageContext.request.contextPath}/main/board/question/reply">댓글달기</a>
 						</td>					
 					</tr>
 				</c:when>
@@ -194,53 +249,51 @@
 					<td colspan="6">
 						<a class="delete" href="${pageContext.request.contextPath}/main/board/${board.boardId}">삭제</a>&nbsp;&nbsp;
 						<a href="${pageContext.request.contextPath}/main/board/questionModify/${board.boardId}">수정하기</a>
-						<a href="${pageContext.request.contextPath}/main/board/question/reply">댓글달기</a>
 					</td>					
 				</tr>
 			</sec:authorize>	
 		</sec:authorize>		
 	</table>
 	
-	<div id="replyPlace">
-		<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
-			<p>댓글작성 권한이 없습니다. 로그인 해주세요.</p>
-		</sec:authorize>
-		<sec:authorize access="isAuthenticated()"> <%-- 로그인 했을 때 --%>							
-			<c:if test="${userId eq board.userId}">
-				<form:form id="replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">
-					<table>
-						<tr>
-							<td>
-								<textarea id="replyContent" name="replyContent" rows="10" cols="8" placeholder="댓글을 입력해주세요."></textarea>
-							</td>
-							<td>
-								<input type="submit" value="댓글 등록">
-							</td>
-						</tr>
-					</table>			
+	<!-- 작성한 댓글을 넣어주기 위한 자리 -->
+	<table width="700" border="1">
+		<div id="replyPlace"></div>
+	
+	<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
+		<tr><td>댓글작성 권한이 없습니다. 로그인 해주세요.</td></tr>
+	</sec:authorize>
+	<sec:authorize access="isAuthenticated()"> <%-- 로그인 했을 때 --%>							
+		<c:if test="${userId eq board.userId}">
+			<form:form id="replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">			
+				<tr>
+					<td>
+						<textarea id="replyContent" name="replyContent" rows="5" cols="10" placeholder="댓글을 입력해주세요."></textarea>
+					</td>
+					<td>
+						<input type="submit" value="댓글 등록">
+					</td>
+				</tr>						
+			</form:form>
+		</c:if>
+		<c:if test="${userId ne board.userId}">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<form:form id="replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">				
+					<tr>
+						<td>
+							<textarea id="replyContent" name="replyContent" rows="5" cols="10" placeholder="댓글을 입력해주세요."></textarea>
+						</td>
+						<td>
+							<input type="submit" value="댓글 등록">
+						</td>
+					</tr>								
 				</form:form>
-			</c:if>
-			<c:if test="${userId ne board.userId}">
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<form:form id="replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">
-						<table>
-							<tr>
-								<td>
-									<textarea name="replyContent" rows="10" cols="8" placeholder="댓글을 입력해주세요."></textarea>
-								</td>
-								<td>
-									<input type="submit" value="댓글 등록">
-								</td>
-							</tr>
-						</table>			
-					</form:form>
-				</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_USER')">
-					<p>댓글작성 권한이 없습니다.</p>
-				</sec:authorize>
-			</c:if>						
-		</sec:authorize>					
-	</div>
+			</sec:authorize>
+			<sec:authorize access="hasRole('ROLE_USER')">
+				<tr><td>댓글작성 권한이 없습니다.</td></tr>
+			</sec:authorize>
+		</c:if>						
+	</sec:authorize>					
+	</table>
 	
 		
 <a href="${pageContext.request.contextPath}/main/board/question/${1}">목록</a>

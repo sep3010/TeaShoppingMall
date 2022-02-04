@@ -73,7 +73,10 @@ public interface BoardMapper {
 			@Param("boardCategory") String boardCategory);
 	
 	// 해당 게시글에 달린 댓글 불러오기
-	@Select("SELECT * FROM reply WHERE board_id = #{boardId} ORDER BY reply_step ASC")
 	public List<ReplyVO> getReplyList(int boardId);
+	
+	
+	// 댓글 달기
+	public void insertReply(ReplyVO replyVO);
 
 }

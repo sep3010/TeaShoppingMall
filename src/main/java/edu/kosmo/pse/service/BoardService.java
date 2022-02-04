@@ -3,6 +3,7 @@ package edu.kosmo.pse.service;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.kosmo.pse.mapper.BoardMapper;
 import edu.kosmo.pse.vo.BoardVO;
+import edu.kosmo.pse.vo.ReplyVO;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -104,5 +106,20 @@ public class BoardService {
 		
 		boardMapper.updateQuestion(boardId, boradTitle, boardContent, boardLock, boardCategory);
 	}
+	
+	// 해당 게시글에 달린 댓글 불러오기
+	public List<ReplyVO> getReplyList(int boardId) {
+		log.info("getReplyList()..");
+		return boardMapper.getReplyList(boardId);		
+	};
+	
+	
+	// 댓글 달기
+	@Transactional(rollbackFor = Exception.class)
+	public void insertReply(ReplyVO replyVO) {
+		log.info("insertReply()..");
+		boardMapper.insertReply(replyVO);
+	};
+
 	
 }

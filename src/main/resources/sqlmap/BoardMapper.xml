@@ -121,6 +121,16 @@
 		WHERE board_id = #{boardId}
 	</update>
 	
+	<select id="getReplyList" resultMap="replyMap">
+		SELECT * FROM reply WHERE board_id = #{boardId} ORDER BY reply_step ASC, reply_write_date ASC
+	</select>
+	
+	<insert id="insertReply">
+		INSERT INTO reply VALUES (REPLY_SEQ.nextval, #{boardGroup}, 
+		#{replyStep}, #{replyIndent}, #{boardId}, #{userId}, SYSDATE, #{replyContent})	
+	</insert>
+	
+	
 
 
 </mapper>	

@@ -2,18 +2,26 @@ package edu.kosmo.pse.controller;
 
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.kosmo.pse.page.PageVO;
 import edu.kosmo.pse.service.BoardService;
 import edu.kosmo.pse.vo.BoardVO;
+import edu.kosmo.pse.vo.ReplyVO;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
@@ -109,6 +117,22 @@ public class QuestionController {
 		view.setViewName(URL);		
 		return view;
 	}
+	
+	// ajax를 이용한 댓글 달기
+	@PostMapping("/reply")
+	public ResponseEntity<List<ReplyVO>> insertAndgetReply(@RequestBody ReplyVO replyVO) {
+		log.info("insertAndgetReply()..");
+		log.info("replyVO : " + replyVO);
+		boardService.insertReply(replyVO);
+		List<ReplyVO> replyList = boardService.getReplyList(replyVO.getBoardId());
+		//Map<String, Object> map = new HashMap<String, Object>();
+		//map.put("replyList", replyList);
+		//log.info("map : " + map);
+		
+		ResponseEntity<List<ReplyVO>> entity = new ResponseEntity<List<ReplyVO>>(replyList, HttpStatus.OK);
+		return entity;
+	}
+	
 	
 	
 }
