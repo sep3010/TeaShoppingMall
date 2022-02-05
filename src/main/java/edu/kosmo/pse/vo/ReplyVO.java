@@ -3,6 +3,9 @@ package edu.kosmo.pse.vo;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,7 +37,10 @@ public class ReplyVO {
 	private int replyIndent;
 	private int boardId;
 	private String userId;
+	
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "Asia/Seoul")
 	private Timestamp replyWriteDate;
+	
 	private String replyContent;
 	
 }

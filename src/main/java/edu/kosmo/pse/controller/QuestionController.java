@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import edu.kosmo.pse.json.MakeJson;
 import edu.kosmo.pse.page.PageVO;
 import edu.kosmo.pse.service.BoardService;
 import edu.kosmo.pse.vo.BoardVO;
@@ -118,19 +125,16 @@ public class QuestionController {
 		return view;
 	}
 	
+	
 	// ajax를 이용한 댓글 달기
-	@PostMapping("/reply")
-	public ResponseEntity<List<ReplyVO>> insertAndgetReply(@RequestBody ReplyVO replyVO) {
+	@PostMapping(value = "/reply", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<ReplyVO> insertAndgetReply(@RequestBody ReplyVO replyVO) {
 		log.info("insertAndgetReply()..");
 		log.info("replyVO : " + replyVO);
 		boardService.insertReply(replyVO);
 		List<ReplyVO> replyList = boardService.getReplyList(replyVO.getBoardId());
-		//Map<String, Object> map = new HashMap<String, Object>();
-		//map.put("replyList", replyList);
-		//log.info("map : " + map);
-		
-		ResponseEntity<List<ReplyVO>> entity = new ResponseEntity<List<ReplyVO>>(replyList, HttpStatus.OK);
-		return entity;
+
+		return replyList;
 	}
 	
 	

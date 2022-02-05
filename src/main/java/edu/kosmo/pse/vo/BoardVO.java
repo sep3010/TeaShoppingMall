@@ -2,6 +2,9 @@ package edu.kosmo.pse.vo;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,10 +42,16 @@ public class BoardVO {
 	private String boardTitle;
 	private String boardContent;
 	private String userId;
+	
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
 	private Timestamp writeDate;
+	
 	private int boardHit;
 	private int boardGroup;
+	
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd/'T'HH:mm:ss", timezone = "Asia/Seoul")
 	private Timestamp rewriteDate;
+	
 	private int boardTypeId;
 	private String boardLock;
 	private int productId;

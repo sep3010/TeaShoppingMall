@@ -28,27 +28,30 @@
 			xhr.setRequestHeader(header, token);
 		});
 	  	
-	  	function maekReply(replyList){
-	  		let reply;
+	  	function maekReply(data){
+
+	  		let reply = '<form:form id="reply-replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">';
 	  		
-	  		for(var key in replyList){
+	  		for(var key in data){	
 	  			
-	  			reply += '<tr><td>replyList[key].userId</td><tr><tr><td>replyList[key].replyContent</td></tr><tr><td>replyList[key].replyWriteDate</td></tr><tr><td><button id="re_reply">답글</button></td></tr>';
-	  			
-	  			if(replyList[key].replyIndent > 0){
+	  			if(data[key].replyIndent > 0){
 	  				reply += '<tr>';
-	  				for(var i = 1; i <= replyList[key].replyIndent; i++){
+	  				for(var i = 1; i <= data[key].replyIndent; i++){
 	  					reply += '<td></td>';
-	  					if(i == (replyList[key].replyIndent - 1)){
+	  					if(i == (data[key].replyIndent - 1)){
 	  						reply += '<td>&angrt;</td>';
 	  					}
-	  					if(i == replyList[key].replyIndent){
-	  						reply += '<td>replyList[key].replyContent</td></tr>';
+	  					if(i == data[key].replyIndent){
+	  						reply += ('<td>' + data[key].replyContent + '</td></tr>');
 	  					}
 	  				}
 	  				
 	  			} // end if > 0
 	  			
+	  			reply += ('<tr><td>' + data[key].userId + '</td><tr><tr><td>'
+	  			+ data[key].replyContent + '</td></tr><tr><td>' + data[key].replyWriteDate 
+	  			+ '</td></tr><tr><td><button id="re_reply">답글</button></td></tr>');
+	  			  			
 	  		} // end for in
 	  		
 	  		$("#replyPlace").prepend(reply);
@@ -118,8 +121,9 @@
 		            success: function (data) {       
 		               console.log("ajax 통신 성공");
 		               console.log(data);
-		               console.log(data.replyList);
-		               maekReply(data.replyList);
+		               let replyList = data;
+		               $("#replyPlace").empty();
+		               maekReply(replyList);
 		               
 		            },
 		            error: function (e) {
@@ -256,9 +260,10 @@
 	</table>
 	
 	<!-- 작성한 댓글을 넣어주기 위한 자리 -->
+	<table id="replyPlace" width="700" border="1">
+	</table>
 	<table width="700" border="1">
-		<div id="replyPlace"></div>
-	
+			
 	<sec:authorize access="isAnonymous()"> <%-- 로그인 하지 않았을 때 --%>
 		<tr><td>댓글작성 권한이 없습니다. 로그인 해주세요.</td></tr>
 	</sec:authorize>
