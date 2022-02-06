@@ -12,83 +12,243 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
-<title>Home</title>
+<title>TEA ROOM PEKOE</title>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        /*
+        $(".teaMenu_sub").hide();
+
+        $("#teaMenu").mouseover(function(){
+            $(".teaMenu_sub").slideDown();
+        });
+
+        $("#teaMenu").mouseleave(function(){
+            $(".teaMenu_sub").hide();
+        });
+        */
+
+        $('.dropdown').hover(function(){ 
+            $('.nav-link', this).trigger('click'); 
+        });
+
+
+        $(".form-inline input").on('focus', function(){ 
+            $(this).attr('placeholder', ''); 
+        });
+            
+        $(".form-inline input").on('focusout', function(){ 
+            $(this).attr('placeholder', 'Search');
+        });
+
+
+
+    });
+
+</script>
+
+<style>
+    @font-face {
+        font-family: 'Minguk-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Minguk-Bold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Minguk-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Minguk-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    header{
+        position: sticky;
+        top: 10px;
+        font-family: 'Minguk-Bold';
+    }
+
+    header p{
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    #loginBar{
+        text-align: end;
+        font-size: 14px;    
+    }
+
+    #loginBar a{
+        text-decoration: none;
+        color: #5E454B;
+    }
+
+    #loginBar a:hover{
+        color: #F7D59C;
+    }
+    
+    #loginBar #logout{
+        display: inline-block;
+    }    
+
+    #loginBar .btn{
+        background-color: white;
+        color: #5E454B;
+        font-size: 14px;
+    }
+
+    #loginBar .btn:hover{
+        color: #F7D59C;
+    }
+
+    .navbar-expand-lg{
+        background-color: white;
+        border-color: white;
+    }
+
+    .navbar-expand-lg .navbar-nav > li > a {
+        color: #5E454B;
+    }
+
+    .logo{
+        width: 110px;
+        height: 100px;
+        margin: 0 20px;
+    }
+
+    .nav-item{
+        font-size: 22px;
+        padding: 15px 20px 0px 20px;
+    }
+
+    .navbar-custom {
+        background-color: white;
+        color: #6B8C42;
+    }
+
+    .navbar-custom .navbar-nav .nav-item .nav-link {
+        border: none;
+        color: #6B8C42;
+    }
+ 
+    .navbar-custom .nav-item:hover .nav-link {
+        border: none;
+        color: #7BC67B;
+    }
+
+    .navbar-custom .navbar-nav .dropdown-menu  { 
+        border: none;
+        width: 50px;
+    }
+
+    .navbar-custom .navbar-nav .dropdown-menu>a  { 
+        color: #6B8C42;
+    }
+
+    .navbar-custom .navbar-nav .dropdown-menu>a:hover,.navbar-custom .navbar-nav .dropdown-menu>a:focus  { 
+        background-color: white;
+        color: #7BC67B;
+    }
+
+    .form-inline .btn{
+        border: none;
+        color: #5A3921;
+        font-size: 18px;
+    }
+
+    .form-inline input:focus{
+        border: 1px solid #cccc;
+        box-shadow: none;
+    }
+
+    .form-inline .btn:hover{
+        background-color: #5A3921;
+        color: white;
+        box-shadow: none;
+    }
+
+
+</style>
 
 </head>
-<body>    <!-- 로그인 되지 않았다면 참 -->
-	<sec:authorize access="isAnonymous()">
-		<p>
-			<a href="<c:url value="/login/loginForm" />">로그인</a>
-		</p>
-	</sec:authorize>
-	<!-- 로그인을 했다면 참 -->
-	<sec:authorize access="isAuthenticated()">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<p>${userId} 관리자님 환영합니다.</p>
-			<p><a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_USER')">
-			<p>${userId}님 환영합니다.</p>
-		</sec:authorize>
-		<sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-			<p><a href="${pageContext.request.contextPath}/user/userHome">마이 페이지</a></p>
-		</sec:authorize>
-		<form:form action="${pageContext.request.contextPath}/logout" method="POST">
-			<input type="submit" value="로그아웃" class="btn" />
-		</form:form>
-	</sec:authorize>
-	<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
-	
-	
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="/">Navbar</a>
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-	
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
-	      <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          TEA
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <h4 class="dropdown-header"><a href="${pageContext.request.contextPath}/main/menu/${0}">Tea</a></h4>	
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/menu/${1}">Black Tea</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/menu/${2}">Green Tea</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/menu/${3}">Oolong</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/menu/${4}">Rooibos</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/menu/${5}">Herbal tea</a>
-	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="#">Something else here</a>
-	        </div>
-	      </li>	
-	      <li class="nav-item active">
-	        <a class="category nav-link" href="${pageContext.request.contextPath}/main/menu/${6}">Tea Bag</a>
-	      </li>
-	      <li class="nav-item active">
-	        <a class="category nav-link" href="${pageContext.request.contextPath}/main/menu/${7}">Teaware</a>
-	      </li>
-	      <li class="nav-item active">
-	        <a class="category nav-link" href="${pageContext.request.contextPath}/main/menu/${8}">Gift</a>
-	      </li>	
-	      <li class="nav-item dropdown">
-	        <a class="nav-link dropdown-toggle active" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          BOARD
-	        </a>
-	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/notice/${1}">Notice</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/question/${1}">Q&A</a>
-	          <a class="category dropdown-item" href="${pageContext.request.contextPath}/main/board/review/${1}">Review</a>
-	        </div>
-	      </li>
-	    </ul>
-	    <form class="form-inline my-2 my-lg-0">
-	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-	    </form>
-	  </div>
-	</nav>
+<body>    
+    
+    <header> 
+        <div id="loginBar">
+            <!-- 로그인 되지 않았다면 참 -->
+            <sec:authorize access="isAnonymous()">
+                <p class="login">
+                    <a href='<c:url value="/login/loginForm"/>'>LOGIN</a>
+                </p>
+            </sec:authorize>
+            <!-- 로그인을 했다면 참 -->
+            <sec:authorize access="isAuthenticated()">
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <p class="welcome">${userId} 관리자님 환영합니다.</p>
+                    <p class="welcome"><a href="${pageContext.request.contextPath}/admin/adminHome">관리자 페이지</a></p>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_USER')">
+                    <p class="welcome">${userId}님 환영합니다.</p>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                    <p class="welcome"><a href="${pageContext.request.contextPath}/user/userHome">My Page</a></p>
+                </sec:authorize>
+                <p><a href="${pageContext.request.contextPath}/user/cart"><img src="${pageContext.request.contextPath}/resources/header/cart.png"></a></p>
+                <form:form id="logout" class="mr-4" action="${pageContext.request.contextPath}/logout" method="POST">
+                    <input class="btn" type="submit" value="LOGOUT"/>
+                </form:form>
+            </sec:authorize>
+        </div>
+        
+
+        <nav class="navbar navbar-custom navbar-expand-lg navbar-light pt-0">
+            <a class="navbar-brand py-0" href="/"><img class="logo" src="${pageContext.request.contextPath}/resources/header/logo_bright.png"></a>
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main/menu/${0}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tea
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/menu/${1}">Black Tea</a>
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/menu/${2}">Green Tea</a>
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/menu/${3}">Oolong</a>
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/menu/${4}">Rooibos</a>
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/menu/${5}">Herbal tea</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="${pageContext.request.contextPath}/main/menu/${6}">Tea Bag</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main/menu/${7}">Teaware</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="${pageContext.request.contextPath}/main/menu/${8}">Gift</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        BOARD
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/board/notice/${1}">Notice</a>
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/board/question/${2}">Q&A</a>
+                      <a class="dropdown-item" href="${pageContext.request.contextPath}/main/board/question/${3}">Review</a>
+                    </div>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+    </header> 
 	
 	
 	
