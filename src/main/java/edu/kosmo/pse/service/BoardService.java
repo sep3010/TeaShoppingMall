@@ -1,15 +1,11 @@
 package edu.kosmo.pse.service;
 
-import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.kosmo.pse.json.MakeJson;
 import edu.kosmo.pse.mapper.BoardMapper;
 import edu.kosmo.pse.vo.BoardVO;
 import edu.kosmo.pse.vo.ReplyVO;

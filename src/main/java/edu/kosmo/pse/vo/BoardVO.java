@@ -43,13 +43,13 @@ public class BoardVO {
 	private String boardContent;
 	private String userId;
 	
-	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "Asia/Seoul")
 	private Timestamp writeDate;
 	
 	private int boardHit;
 	private int boardGroup;
 	
-	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd/'T'HH:mm:ss", timezone = "Asia/Seoul")
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd  HH:mm:ss", timezone = "Asia/Seoul")
 	private Timestamp rewriteDate;
 	
 	private int boardTypeId;

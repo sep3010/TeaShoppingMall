@@ -29,8 +29,11 @@
 		});
 	  	
 	  	function maekReply(data){
-
-	  		let reply = '<form:form id="reply-replyForm" action="${pageContext.request.contextPath}/main/board/reply" method="POST">';
+	  		$("#replyPlace").empty();
+	  		$("#replyContent").val("");
+	  		$("#replyContent").focus();
+	  		
+	  		let reply;
 	  		
 	  		for(var key in data){	
 	  			
@@ -59,6 +62,8 @@
 	  	} // end makeReply()
 	  	
 		$(document).ready(function () {
+			$("#replyContent").focus();
+			
 		    $(".delete").click( function (event) {
 		       event.preventDefault();
 		       
@@ -121,9 +126,8 @@
 		            success: function (data) {       
 		               console.log("ajax 통신 성공");
 		               console.log(data);
-		               let replyList = data;
-		               $("#replyPlace").empty();
-		               maekReply(replyList);
+		               
+		               maekReply(data);
 		               
 		            },
 		            error: function (e) {
