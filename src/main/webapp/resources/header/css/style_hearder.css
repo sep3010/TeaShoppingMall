@@ -1,0 +1,131 @@
+@font-face {
+	font-family: 'Minguk-Bold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Minguk-Bold.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Minguk-Regular';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Minguk-Regular.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+header {
+	position: sticky;
+	top: 10px;
+	font-family: 'Minguk-Bold';
+	z-index: 2;
+}
+
+header p {
+	display: inline-block;
+	margin: 0 5px;
+}
+
+#loginBar {
+	text-align: end;
+	font-size: 15px;
+}
+
+#loginBar a {
+	text-decoration: none;
+	color: #5E454B;
+}
+
+#loginBar a:hover {
+	color: #F7D59C;
+}
+
+#loginBar #logout {
+	display: inline-block;
+}
+
+#loginBar .btn {
+	background-color: white;
+	color: #5E454B;
+	font-size: 14px;
+}
+
+#loginBar .btn:hover {
+	color: #F7D59C;
+}
+
+.navbar-expand-lg {
+	background-color: white;
+	border-color: white;
+}
+
+.navbar-expand-lg .navbar-nav>li>a {
+	color: #5E454B;
+}
+
+.logo {
+	width: 110px;
+	height: 100px;
+	margin: 0 20px;
+}
+
+.nav-item {
+	font-size: 22px;
+	padding: 15px 20px 0px 20px;
+}
+
+.navbar-custom {
+	background-color: white;
+	color: #6B8C42;
+}
+
+.navbar-custom .navbar-nav .nav-item .nav-link {
+	border: none;
+	color: #6B8C42;
+}
+
+/*드롭다운 메뉴 마우스 올렸을 때 실행*/
+.dropdown:hover .dropdown-menu {
+	display: block;
+	margin-top: 0;
+}
+
+.navbar-custom .nav-item:hover .nav-link {
+	border: none;
+	color: #7BC67B;
+}
+
+.navbar-custom .navbar-nav .dropdown-menu {
+	border: none;
+	width: 50px;
+}
+
+.navbar-custom .navbar-nav .dropdown-menu>a {
+	color: #6B8C42;
+	font-size: 18px;
+}
+
+.navbar-custom .navbar-nav .dropdown-menu>a:hover, .navbar-custom .navbar-nav .dropdown-menu>a:focus
+	{
+	background-color: white;
+	color: #7BC67B;
+}
+
+.form-inline .btn {
+	border: none;
+	color: #5A3921;
+	font-size: 18px;
+}
+
+.form-inline input:focus {
+	border: 1px solid #cccc;
+	box-shadow: none;
+}
+
+.form-inline .btn:hover {
+	background-color: #5A3921;
+	color: white;
+	box-shadow: none;
+}

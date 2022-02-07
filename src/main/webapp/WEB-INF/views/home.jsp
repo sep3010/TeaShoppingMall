@@ -12,25 +12,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
+<!-- header 태그의 CSS(navbar와 로그인 상태 부분) -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/header/css/style_hearder.css">
+
 <title>TEA ROOM PEKOE</title>
+
 <script type="text/javascript">
 
     $(document).ready(function(){
-        /*
-        $(".teaMenu_sub").hide();
-
-        $("#teaMenu").mouseover(function(){
-            $(".teaMenu_sub").slideDown();
-        });
-
-        $("#teaMenu").mouseleave(function(){
-            $(".teaMenu_sub").hide();
-        });
-        */
-
-        $('.dropdown').hover(function(){ 
-            $('.nav-link', this).trigger('click'); 
-        });
 
 
         $(".form-inline input").on('focus', function(){ 
@@ -47,138 +36,19 @@
 
 </script>
 
-<style>
-    @font-face {
-        font-family: 'Minguk-Bold';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Minguk-Bold.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    @font-face {
-        font-family: 'Minguk-Regular';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Minguk-Regular.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    header{
-        position: sticky;
-        top: 10px;
-        font-family: 'Minguk-Bold';
-    }
-
-    header p{
-        display: inline-block;
-        margin: 0 5px;
-    }
-
-    #loginBar{
-        text-align: end;
-        font-size: 14px;    
-    }
-
-    #loginBar a{
-        text-decoration: none;
-        color: #5E454B;
-    }
-
-    #loginBar a:hover{
-        color: #F7D59C;
-    }
-    
-    #loginBar #logout{
-        display: inline-block;
-    }    
-
-    #loginBar .btn{
-        background-color: white;
-        color: #5E454B;
-        font-size: 14px;
-    }
-
-    #loginBar .btn:hover{
-        color: #F7D59C;
-    }
-
-    .navbar-expand-lg{
-        background-color: white;
-        border-color: white;
-    }
-
-    .navbar-expand-lg .navbar-nav > li > a {
-        color: #5E454B;
-    }
-
-    .logo{
-        width: 110px;
-        height: 100px;
-        margin: 0 20px;
-    }
-
-    .nav-item{
-        font-size: 22px;
-        padding: 15px 20px 0px 20px;
-    }
-
-    .navbar-custom {
-        background-color: white;
-        color: #6B8C42;
-    }
-
-    .navbar-custom .navbar-nav .nav-item .nav-link {
-        border: none;
-        color: #6B8C42;
-    }
- 
-    .navbar-custom .nav-item:hover .nav-link {
-        border: none;
-        color: #7BC67B;
-    }
-
-    .navbar-custom .navbar-nav .dropdown-menu  { 
-        border: none;
-        width: 50px;
-    }
-
-    .navbar-custom .navbar-nav .dropdown-menu>a  { 
-        color: #6B8C42;
-    }
-
-    .navbar-custom .navbar-nav .dropdown-menu>a:hover,.navbar-custom .navbar-nav .dropdown-menu>a:focus  { 
-        background-color: white;
-        color: #7BC67B;
-    }
-
-    .form-inline .btn{
-        border: none;
-        color: #5A3921;
-        font-size: 18px;
-    }
-
-    .form-inline input:focus{
-        border: 1px solid #cccc;
-        box-shadow: none;
-    }
-
-    .form-inline .btn:hover{
-        background-color: #5A3921;
-        color: white;
-        box-shadow: none;
-    }
-
-
-</style>
 
 </head>
 <body>    
     
     <header> 
-        <div id="loginBar">
+        <div id="loginBar" class="mt-3">
             <!-- 로그인 되지 않았다면 참 -->
             <sec:authorize access="isAnonymous()">
-                <p class="login">
+                <p class="login mr-3">
                     <a href='<c:url value="/login/loginForm"/>'>LOGIN</a>
+                </p>
+                <p class="login mr-4">
+                    <a href="${pageContext.request.contextPath}/add/addForm">회원가입</a>
                 </p>
             </sec:authorize>
             <!-- 로그인을 했다면 참 -->
@@ -202,7 +72,7 @@
         
 
         <nav class="navbar navbar-custom navbar-expand-lg navbar-light pt-0">
-            <a class="navbar-brand py-0" href="/"><img class="logo" src="${pageContext.request.contextPath}/resources/header/logo_bright.png"></a>
+            <a class="navbar-brand py-0" href="${pageContext.request.contextPath}/"><img class="logo" src="${pageContext.request.contextPath}/resources/header/logo_bright.png"></a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
